@@ -6,5 +6,7 @@
   "accelerationExponent": 3.0,
   "maximumAcceleration": 2.78,
   "maximumDeceleration": 4.57,
+  "totalBlocksWidth": 2,
+  "totalBlocksHeight": 2,
   "timeStep": 0.1
 }

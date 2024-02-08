@@ -20,4 +20,8 @@ public class Road {
     public double length() {
         return length;
     }
+
+    public String toString() {
+        return "Road from " + start + " to " + end;
+    }
 }
