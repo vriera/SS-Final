@@ -12,6 +12,7 @@ public class Config {
     public double reactionTime = 0;
     public double maximumAcceleration = 0;
     public double maximumDeceleration = 0;
+    public double timeStep = 0;
 
 
 
@@ -44,6 +45,7 @@ public class Config {
         reactionTime = config.getDouble("reactionTime");
         maximumAcceleration = config.getDouble("maximumAcceleration");
         maximumDeceleration = config.getDouble("maximumDeceleration");
+        timeStep = config.getDouble("timeStep");
     }
 
     @Override
@@ -56,6 +58,7 @@ public class Config {
                 ", reactionTime=" + reactionTime +
                 ", maximumAcceleration=" + maximumAcceleration +
                 ", maximumDeceleration=" + maximumDeceleration +
+                ", timeStep=" + timeStep +
                 '}';
     }
 }

@@ -5,5 +5,6 @@
   "reactionTime": 0.25,
   "accelerationExponent": 3.0,
   "maximumAcceleration": 2.78,
-  "maximumDeceleration": 4.57
+  "maximumDeceleration": 4.57,
+  "timeStep": 0.1
 }
