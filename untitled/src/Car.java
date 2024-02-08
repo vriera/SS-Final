@@ -7,6 +7,7 @@ public class Car {
     private ArrayList<Road> route;
     private double finalRoadPos;
     private int currentRoadIndex;
+    private boolean isStopped = false;
 
     public Car(ArrayList<Road> route, double startRoadPos, double finalRoadPos) {
         if (route == null || route.size() == 0) {
