@@ -1,0 +1,9 @@
+{
+  "carLength": 4.6,
+  "minimumDesiredDistance": 2.0,
+  "maximumDesiredSpeed": 16.666666,
+  "reactionTime": 0.25,
+  "accelerationExponent": 3.0,
+  "maximumAcceleration": 2.78,
+  "maximumDeceleration": 4.57
+}
