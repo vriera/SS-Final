@@ -15,7 +15,7 @@ public class Main {
     }
 
     private static void saveInJSONFile(String fileName, JSONObject data) {
-        try (FileWriter file = new FileWriter(fileName)) {
+        try (FileWriter file = new FileWriter("outputs/" + fileName)) {
             file.write(data.toString());
             file.flush();
         } catch (IOException e) {
