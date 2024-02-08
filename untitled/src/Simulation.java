@@ -1,3 +1,6 @@
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 public class Simulation {
@@ -53,5 +56,41 @@ public class Simulation {
         return roads;
     }
 
+    public JSONObject serializeStaticData() {
+        JSONObject data = new JSONObject();
+        JSONObject configData = new JSONObject();
+        data.put("config", configData);
+        configData.put("totalBlocksWidth", config.totalBlocksWidth);
+        configData.put("totalBlocksHeight", config.totalBlocksHeight);
+        configData.put("carLength", config.carLength);
+        configData.put("minimumDesiredDistance", config.minimumDesiredDistance);
+        configData.put("maximumDesiredSpeed", config.maximumDesiredSpeed);
+        configData.put("accelerationExponent", config.accelerationExponent);
+        configData.put("reactionTime", config.reactionTime);
+        configData.put("maximumAcceleration", config.maximumAcceleration);
+        configData.put("maximumDeceleration", config.maximumDeceleration);
+        configData.put("timeStep", config.timeStep);
 
+        JSONArray nodesData = new JSONArray();
+        data.put("nodes", nodesData);
+        for (int i = 0; i <= config.totalBlocksWidth; i++) {
+            for (int j = 0; j <= config.totalBlocksHeight; j++) {
+                Node node = nodes[i][j];
+                JSONObject nodeData = new JSONObject();
+                nodesData.put(node.id(), nodeData);
+                nodeData.put("x", node.x());
+                nodeData.put("y", node.y());
+            }
+        }
+
+        JSONArray roadsData = new JSONArray();
+        data.put("roads", roadsData);
+        for (Road road : roads) {
+            JSONObject roadData = new JSONObject();
+            roadsData.put(roadData);
+            roadData.put("start", road.start().id());
+            roadData.put("end", road.end().id());
+        }
+        return data;
+    }
 }
