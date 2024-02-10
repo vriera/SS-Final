@@ -1,15 +1,18 @@
+package ar.edu.itba.models;
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class Car {
     private double pos;
     private double vel;
     private double acc;
-    private ArrayList<Road> route;
+    private List<Road> route;
     private double finalRoadPos;
     private int currentRoadIndex;
     private boolean isStopped = false;
 
-    public Car(ArrayList<Road> route, double startRoadPos, double finalRoadPos) {
+    public Car(List<Road> route, double startRoadPos, double finalRoadPos) {
         if (route == null || route.size() == 0) {
             throw new IllegalArgumentException("route must be non-empty");
         }
