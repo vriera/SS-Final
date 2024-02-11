@@ -47,6 +47,10 @@ public class Road {
         return redZoneLength;
     }
 
+    public void removeCar(Car car){
+        cars.remove(car);
+    }
+
     @Override
     public boolean equals(Object o ){
         if(o instanceof  Road){
@@ -67,6 +71,27 @@ public class Road {
         if(cars.size() == 0){
             return null;
         }
+        return cars.get(0);
+    }
+
+    public Car peekLastCar(){
+        if(cars.size() == 0){
+            return null;
+        }
         return cars.get(cars.size()-1);
+    }
+
+    public Car getCarAhead(Car car){
+        if (cars.size() == 0){
+            throw new IllegalArgumentException("No cars in road");
+        }
+        if (!cars.contains(car)){
+            throw new IllegalArgumentException("Car not in road");
+        }
+        int index = cars.indexOf(car);
+        if(index == -1 || index == 0){
+            return null;
+        }
+        return cars.get(index-1);
     }
 }

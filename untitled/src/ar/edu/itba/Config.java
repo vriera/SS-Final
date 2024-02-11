@@ -18,6 +18,7 @@ public class Config {
     public int totalBlocksWidth = 0;
     public int totalBlocksHeight = 0;
     public double yellowZoneLength = 0;
+    public double yellowZoneSpeedMul = 0;
     public double redZoneLength = 0;
 
     // Singleton
@@ -54,6 +55,7 @@ public class Config {
         totalBlocksWidth = config.getInt("totalBlocksWidth");
         yellowZoneLength = config.getDouble("yellowZoneLength");
         redZoneLength = config.getDouble("redZoneLength");
+        yellowZoneSpeedMul = config.getDouble("yellowZoneSpeedMul");
     }
 
     @Override

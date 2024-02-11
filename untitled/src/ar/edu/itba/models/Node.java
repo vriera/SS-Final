@@ -130,4 +130,11 @@ public class Node{
             inboundRoadsStops.set(1, false);
         }
     }
+
+    public boolean isStopped(Road r) {
+        if (!inboundRoads.contains(r)) {
+            throw new IllegalArgumentException("Road must be inbound");
+        }
+        return inboundRoadsStops.get(inboundRoads.indexOf(r));
+    }
 }

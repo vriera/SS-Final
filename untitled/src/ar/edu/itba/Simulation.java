@@ -68,7 +68,7 @@ public class Simulation {
 //            System.out.println(road);
 //        }
 //        System.out.println("\n");
-        return new Car(path,0,0);
+        return new Car(path,0,0, config.carLength);
     }
 
     public ArrayList<Road> generateGrid() {
