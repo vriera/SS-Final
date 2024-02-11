@@ -31,17 +31,17 @@ public class Simulation {
         for (Road road : roads) {
             System.out.println(road);
         }
-        System.out.println("Border:");
-        for (Road road : borderRoads) {
-            System.out.println(road);
-        }
+//        int i = 0;
+//        while (i < 10000) {
+//            i++;
+//            placeCar();
+//        }
 
-        int i = 0;
-        while(i < 10000){
-            i++;
-            placeCar();
-        }
+    }
 
+    public void runStep() {
+        // First, update the nodes
+        // Then, update the cars
     }
 
     public Car placeCar(){
@@ -55,23 +55,22 @@ public class Simulation {
         while (endingRoad.equals(startingRoad));
         List<Road> path = this.pathFinder.generatePath(nodes,startingRoad, endingRoad);
 
-        System.out.println("\n");
-        System.out.println("New path from:" + startingRoad.end() + " to: " + endingRoad.end());
-        for (Road road : path) {
-            System.out.println(road);
-        }
-        System.out.println("\n");
+//        System.out.println("\n");
+//        System.out.println("New path from:" + startingRoad.end() + " to: " + endingRoad.end());
+//        for (Road road : path) {
+//            System.out.println(road);
+//        }
+//        System.out.println("\n");
         return new Car(path,0,0);
     }
-
 
     public ArrayList<Road> generateGrid() {
         double totalWidth = config.totalBlocksWidth * METERS_PER_BLOCK;
         double totalHeight = config.totalBlocksHeight * METERS_PER_BLOCK;
         int aux = 0;
 
-        for (int i = 0; i <= config.totalBlocksWidth; i++) {
-            for (int j = 0; j <= config.totalBlocksHeight; j++) {
+        for (int i = 0; i <= config.totalBlocksHeight; i++) {
+            for (int j = 0; j <= config.totalBlocksWidth; j++) {
                 Node n = new Node(aux, j * METERS_PER_BLOCK, i * METERS_PER_BLOCK);
                 nodes[i][j] = n;
                 aux++;
@@ -91,7 +90,7 @@ public class Simulation {
                         auxRoad = new Road(nodes[i][j + 1], nodes[i][j]);
                         roads.add(auxRoad);
                     }
-                    if(i ==0 || i == config.totalBlocksWidth){
+                    if(i == 0 || i == config.totalBlocksWidth){
                         borderRoads.add(auxRoad);
                     }
                 }
