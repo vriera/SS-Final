@@ -1,3 +1,7 @@
+package ar.edu.itba.pathfinding.heuristics;
+
+import ar.edu.itba.models.Node;
+import ar.edu.itba.pathfinding.heuristics.Heuristic;
 
 public class ManhattanDistance implements Heuristic {
     @Override

@@ -1,7 +1,24 @@
+package ar.edu.itba.models;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class Node{
     private int id;
     private double x;
     private double y;
+
+
+    public List<Road> getOutboundRoads() {
+        return outboundRoads;
+    }
+
+    public List<Road> getInboundRoads() {
+        return inboundRoads;
+    }
+
+    private List<Road> outboundRoads;
+    private List<Road> inboundRoads;
     @Override
     public String toString(){
         return "Node[id=" +id + ",x=" + x + ",y=" + y + "]";
@@ -14,6 +31,8 @@ public class Node{
         }
         this.x = x;
         this.y = y;
+        this.outboundRoads = new ArrayList<>();
+        this.inboundRoads = new ArrayList<>();
     }
     public int id(){
         return id;
@@ -32,5 +51,13 @@ public class Node{
     @Override
     public int hashCode(){
         return id;
+    }
+
+    public void addRoad(Road r){
+        if(r.start().id == this.id){
+            outboundRoads.add(r);
+        }else{
+            inboundRoads.add(r);
+        }
     }
 }

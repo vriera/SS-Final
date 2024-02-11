@@ -1,8 +1,16 @@
-import javax.swing.border.Border;
+package ar.edu.itba;
+
+import ar.edu.itba.models.Car;
+import ar.edu.itba.models.Node;
+import ar.edu.itba.models.Road;
+import ar.edu.itba.pathfinding.AStar;
+import ar.edu.itba.pathfinding.PathFinder;
+import ar.edu.itba.pathfinding.heuristics.EuclidianDistance;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class Simulation {
@@ -12,6 +20,7 @@ public class Simulation {
     private ArrayList<Road> roads = new ArrayList<>();
     private ArrayList<Road> borderRoads = new ArrayList<>();
 
+    private PathFinder pathFinder = new AStar(new EuclidianDistance());
     private double time = 0;
     private final Config config;
 
@@ -26,23 +35,36 @@ public class Simulation {
         for (Road road : borderRoads) {
             System.out.println(road);
         }
+
         int i = 0;
-        while(i < 100){
+        while(i < 10000){
             i++;
             placeCar();
         }
+
     }
 
     public Car placeCar(){
         Random rand =  new Random();
         //0 -> y border , 1 -> x border;
         Road startingRoad = borderRoads.get(rand.nextInt(borderRoads.size()));
-        Road endingRoad = roads.get(rand.nextInt(roads.size()));
-        ArrayList<Road> path = new ArrayList<>();
-        path.add(startingRoad);
-        path.add(endingRoad);
+        Road endingRoad;
+        do {
+            endingRoad = roads.get(rand.nextInt(roads.size()));
+        }
+        while (endingRoad.equals(startingRoad));
+        List<Road> path = this.pathFinder.generatePath(nodes,startingRoad, endingRoad);
+
+        System.out.println("\n");
+        System.out.println("New path from:" + startingRoad.end() + " to: " + endingRoad.end());
+        for (Road road : path) {
+            System.out.println(road);
+        }
+        System.out.println("\n");
         return new Car(path,0,0);
     }
+
+
     public ArrayList<Road> generateGrid() {
         double totalWidth = config.totalBlocksWidth * METERS_PER_BLOCK;
         double totalHeight = config.totalBlocksHeight * METERS_PER_BLOCK;
