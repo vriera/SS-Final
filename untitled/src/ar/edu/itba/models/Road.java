@@ -5,14 +5,15 @@ public class Road {
     private Node end;
     private double length;
 
-
-    public Road(Node start, Node end ) {
+    private Axis direction;
+    public Road(Node start, Node end , Axis direction){
         this.start = start;
         this.end = end;
         this.length = Math.sqrt(Math.pow(start.x() - end.x(), 2) + Math.pow(start.y() - end.y(), 2));
+        this.direction = direction;
         start.addRoad(this);
         end.addRoad(this);
-    }
+  }
 
     public Node start() {
         return start;
@@ -35,7 +36,7 @@ public class Road {
 
     }
     public String toString() {
-        return "Road from " + start + " to " + end;
+        return "Road from " + start + " to " + end + " Direction: " + direction.toString();
     }
 
 }

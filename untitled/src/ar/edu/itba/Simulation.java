@@ -1,5 +1,6 @@
 package ar.edu.itba;
 
+import ar.edu.itba.models.Axis;
 import ar.edu.itba.models.Car;
 import ar.edu.itba.models.Node;
 import ar.edu.itba.models.Road;
@@ -37,7 +38,11 @@ public class Simulation {
 //            placeCar();
 //        }
 
-    }
+        int i = 0;
+        while(i < 0){
+            i++;
+            placeCar();
+        }
 
     public void runStep() {
         // First, update the nodes
@@ -84,10 +89,10 @@ public class Simulation {
                 //agregar el road en la direccion x
                 if (j < config.totalBlocksHeight) {
                     if (i % 2 == 0) {
-                        auxRoad = new Road(nodes[i][j], nodes[i][j + 1]);
+                        auxRoad = new Road(nodes[i][j], nodes[i][j + 1] , Axis.WEST);
                         roads.add(auxRoad);
                     } else {
-                        auxRoad = new Road(nodes[i][j + 1], nodes[i][j]);
+                        auxRoad = new Road(nodes[i][j + 1], nodes[i][j] , Axis.EAST);
                         roads.add(auxRoad);
                     }
                     if(i == 0 || i == config.totalBlocksWidth){
@@ -98,10 +103,10 @@ public class Simulation {
                 //agregar el road en la direccion y
                 if (i < config.totalBlocksWidth){
                     if (j % 2 != 0) {
-                        auxRoad = new Road(nodes[i][j], nodes[i + 1][j]);
+                        auxRoad = new Road(nodes[i][j], nodes[i + 1][j] , Axis.SOUTH);
                         roads.add(auxRoad);
                     } else {
-                        auxRoad = new Road(nodes[i + 1][j], nodes[i][j]);
+                        auxRoad = new Road(nodes[i + 1][j], nodes[i][j] , Axis.NORTH );
                         roads.add(auxRoad);
                     }
                     if(j ==0 || j == config.totalBlocksWidth){
