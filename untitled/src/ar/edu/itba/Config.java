@@ -19,7 +19,7 @@ public class Config {
     public int totalBlocksHeight = 0;
     public double yellowZoneLength = 0;
     public double redZoneLength = 0;
-    
+
     // Singleton
     public Config() {
     }
