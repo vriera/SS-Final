@@ -39,10 +39,11 @@ public class Simulation {
 //        }
 
         int i = 0;
-        while(i < 0){
+        while (i < 0) {
             i++;
             placeCar();
         }
+    }
 
     public void runStep() {
         // First, update the nodes
