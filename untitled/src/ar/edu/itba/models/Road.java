@@ -64,6 +64,19 @@ public class Road {
     }
 
     public void addCar(Car car){
+        if (cars.contains(car)){
+            throw new IllegalArgumentException("Car already in road");
+        };
+        if (this.cars.size() == 0) {
+            cars.add(car);
+            return;
+        }
+        for (int i = 0; i < cars.size(); i++) {
+            if (car.pos() < cars.get(i).pos()) {
+                cars.add(i, car);
+                return;
+            }
+        }
         cars.add(car);
     }
 

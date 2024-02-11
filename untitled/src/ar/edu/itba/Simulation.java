@@ -10,7 +10,9 @@ import ar.edu.itba.pathfinding.heuristics.EuclidianDistance;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -19,6 +21,7 @@ public class Simulation {
 
     private Node[][] nodes;
     private ArrayList<Road> roads = new ArrayList<>();
+    private ArrayList<Car> cars = new ArrayList<>();
     private ArrayList<Road> borderRoads = new ArrayList<>();
 
     private PathFinder pathFinder = new AStar(new EuclidianDistance());
@@ -48,7 +51,17 @@ public class Simulation {
 
     public void runStep() {
         // First, update the nodes
+        Arrays.stream(nodes).parallel().forEach(row -> {
+            Arrays.stream(row).parallel().forEach(Node::update);
+        });
         // Then, update the cars
+        cars.stream().parallel().forEach(car -> {
+            car.calculateValues(config.timeStep, config);
+        });
+        cars.stream().parallel().forEach(car -> {
+            car.update();
+        });
+
     }
 
     public Car placeCar(){
