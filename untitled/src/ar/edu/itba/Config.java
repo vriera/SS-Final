@@ -1,3 +1,5 @@
+package ar.edu.itba;
+
 import org.json.JSONObject;
 
 import java.io.*;
@@ -52,7 +54,7 @@ public class Config {
 
     @Override
     public String toString() {
-        return "Config{" +
+        return "ar.edu.itba.Config{" +
                 "carLength=" + carLength +
                 ", minimumDesiredDistance=" + minimumDesiredDistance +
                 ", maximumDesiredSpeed=" + maximumDesiredSpeed +
