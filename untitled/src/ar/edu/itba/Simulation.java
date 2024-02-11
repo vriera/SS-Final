@@ -29,6 +29,7 @@ public class Simulation {
         this.config = config;
         this.nodes = new Node[config.totalBlocksWidth + 1][config.totalBlocksHeight + 1];
         this.generateGrid();
+        this.initIntersectionPriorities();
         for (Road road : roads) {
             System.out.println(road);
         }
@@ -90,10 +91,10 @@ public class Simulation {
                 //agregar el road en la direccion x
                 if (j < config.totalBlocksHeight) {
                     if (i % 2 == 0) {
-                        auxRoad = new Road(nodes[i][j], nodes[i][j + 1] , Axis.EAST);
+                        auxRoad = new Road(nodes[i][j], nodes[i][j + 1] , Axis.EAST, config.yellowZoneLength, config.redZoneLength);
                         roads.add(auxRoad);
                     } else {
-                        auxRoad = new Road(nodes[i][j + 1], nodes[i][j] , Axis.WEST);
+                        auxRoad = new Road(nodes[i][j + 1], nodes[i][j] , Axis.WEST, config.yellowZoneLength, config.redZoneLength);
                         roads.add(auxRoad);
                     }
                     if(i == 0 || i == config.totalBlocksWidth){
@@ -104,10 +105,10 @@ public class Simulation {
                 //agregar el road en la direccion y
                 if (i < config.totalBlocksWidth){
                     if (j % 2 != 0) {
-                        auxRoad = new Road(nodes[i][j], nodes[i + 1][j] , Axis.SOUTH);
+                        auxRoad = new Road(nodes[i][j], nodes[i + 1][j] , Axis.SOUTH, config.yellowZoneLength, config.redZoneLength);
                         roads.add(auxRoad);
                     } else {
-                        auxRoad = new Road(nodes[i + 1][j], nodes[i][j] , Axis.NORTH );
+                        auxRoad = new Road(nodes[i + 1][j], nodes[i][j] , Axis.NORTH , config.yellowZoneLength, config.redZoneLength);
                         roads.add(auxRoad);
                     }
                     if(j ==0 || j == config.totalBlocksWidth){
