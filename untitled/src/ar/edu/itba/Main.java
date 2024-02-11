@@ -15,23 +15,8 @@ public class Main {
 //        Simulation simulation = new Simulation(config.timeStep, config);
 //        JSONObject staticData = simulation.serializeStaticData();
 //        saveInJSONFile(generateUniqueFileName(), staticData);
-
-        for (Axis a : Axis.values()) {
-
-            for (Axis b : Axis.values()) {
-                if (a != b) {
-                    System.out.println("Comparing: " + a + a.ordinal() + " to " + b + b.ordinal());
-                    System.out.println(compareAxis(a, b));
-                }
-            }
-        }
     }
 
-    //a is bigger?
-    private static boolean compareAxis( Axis a , Axis b){
-        int mod = a.ordinal() - b.ordinal() % 4;
-        return (mod < 0 ) ? mod + 4 > 1 : mod >1;
-    }
     private static void saveInJSONFile(String fileName, JSONObject data) {
         try (FileWriter file = new FileWriter("outputs/" + fileName)) {
             file.write(data.toString());

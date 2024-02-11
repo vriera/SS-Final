@@ -120,6 +120,15 @@ public class Simulation {
         return roads;
     }
 
+    public void initIntersectionPriorities() {
+        for (int i = 0; i < this.nodes.length; i++) {
+            for (int j = 0; j < this.nodes[0].length; j++) {
+                    Node n = this.nodes[i][j];
+                    n.initIntersectionPriority();
+            }
+        }
+    }
+
     public JSONObject serializeStaticData() {
         JSONObject data = new JSONObject();
         JSONObject configData = new JSONObject();

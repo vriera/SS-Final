@@ -1,6 +1,7 @@
 package ar.edu.itba.models;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class Node{
@@ -59,6 +60,13 @@ public class Node{
             inboundRoads.add(r);
             inboundRoadsStops.add(false);
         }
+    }
+
+    public void initIntersectionPriority(){
+        this.inboundRoads.sort((Road a, Road b) -> {
+            int mod = a.direction().ordinal() - b.direction().ordinal() % 4;
+            return (mod < 0) ? mod + 4 : mod;
+        });
     }
 
     public void update(){

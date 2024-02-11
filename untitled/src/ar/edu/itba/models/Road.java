@@ -27,6 +27,10 @@ public class Road {
         return length;
     }
 
+    public Axis direction() {
+        return direction;
+    }
+
     @Override
     public boolean equals(Object o ){
         if(o instanceof  Road){
@@ -38,5 +42,4 @@ public class Road {
     public String toString() {
         return "Road from " + start + " to " + end + " Direction: " + direction.toString();
     }
-
 }
