@@ -90,10 +90,10 @@ public class Simulation {
                 //agregar el road en la direccion x
                 if (j < config.totalBlocksHeight) {
                     if (i % 2 == 0) {
-                        auxRoad = new Road(nodes[i][j], nodes[i][j + 1] , Axis.WEST);
+                        auxRoad = new Road(nodes[i][j], nodes[i][j + 1] , Axis.EAST);
                         roads.add(auxRoad);
                     } else {
-                        auxRoad = new Road(nodes[i][j + 1], nodes[i][j] , Axis.EAST);
+                        auxRoad = new Road(nodes[i][j + 1], nodes[i][j] , Axis.WEST);
                         roads.add(auxRoad);
                     }
                     if(i == 0 || i == config.totalBlocksWidth){

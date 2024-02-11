@@ -10,7 +10,7 @@ public class Node{
     private List<Road> outboundRoads;
     private List<Road> inboundRoads;
 
-
+    private List<Boolean> inboundRoadsStops;
     public List<Road> getOutboundRoads() {
         return outboundRoads;
     }
@@ -57,6 +57,11 @@ public class Node{
             outboundRoads.add(r);
         }else{
             inboundRoads.add(r);
+            inboundRoadsStops.add(false);
         }
+    }
+
+    public void update(){
+
     }
 }
