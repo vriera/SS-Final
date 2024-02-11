@@ -17,7 +17,9 @@ public class Config {
     public double timeStep = 0;
     public int totalBlocksWidth = 0;
     public int totalBlocksHeight = 0;
-
+    public double yellowZoneLength = 0;
+    public double redZoneLength = 0;
+    
     // Singleton
     public Config() {
     }
@@ -50,6 +52,8 @@ public class Config {
         timeStep = config.getDouble("timeStep");
         totalBlocksHeight = config.getInt("totalBlocksHeight");
         totalBlocksWidth = config.getInt("totalBlocksWidth");
+        yellowZoneLength = config.getDouble("yellowZoneLength");
+        redZoneLength = config.getDouble("redZoneLength");
     }
 
     @Override

@@ -69,7 +69,7 @@ public class Node{
         });
     }
 
-    public void update(){
+    public void update() {
 
     }
 }

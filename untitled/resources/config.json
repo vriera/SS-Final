@@ -8,5 +8,7 @@
   "maximumDeceleration": 4.57,
   "totalBlocksWidth": 3,
   "totalBlocksHeight": 3,
-  "timeStep": 0.1
+  "timeStep": 0.1,
+  "yellowZoneLength": 20.0,
+  "redZoneLength": 5.0
 }
