@@ -113,10 +113,7 @@ public class Car {
     }
 
     public void update(double deltaTime) {
-        this.acc = this.nextAcc;
-        this.vel += Math.max(0, this.acc * deltaTime);
         double auxPos = this.pos + this.vel * deltaTime + this.acc * Math.pow(deltaTime, 2) / 2;
-
         if (auxPos > this.road().length()) {
             this.pos = (auxPos - this.road().length()) + len;
             this.road().removeCar(this);
@@ -124,9 +121,11 @@ public class Car {
                 this.currentRoadIndex++;
                 this.route.get(this.currentRoadIndex).addCar(this);
             }
+            this.acc = this.nextAcc;
+            this.vel += Math.max(0, this.acc * deltaTime);
         } else {
             this.pos = auxPos;
-            this.nextAcc = 0;
         }
+        this.nextAcc = 0;
     }
 }
