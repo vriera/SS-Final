@@ -58,8 +58,8 @@ public class Simulation {
         cars.stream().parallel().forEach(car -> {
             car.calculateValues(config.timeStep, config);
         });
-        cars.stream().parallel().forEach(car -> {
-            car.update();
+        cars.stream().forEach(car -> {
+            car.update(config.timeStep);
         });
 
     }

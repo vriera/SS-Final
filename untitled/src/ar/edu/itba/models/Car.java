@@ -112,21 +112,21 @@ public class Car {
         }
     }
 
-    public void update() {
+    public void update(double deltaTime) {
         this.acc = this.nextAcc;
-        this.vel += this.acc;
+        this.vel += this.acc * deltaTime;
+        double auxPos = this.pos + this.vel * deltaTime + this.acc * Math.pow(deltaTime, 2) / 2;
 
-        if (this.pos + this.vel > this.road().length()) {
-            this.pos = (this.pos + this.vel - this.road().length()) + len;
-            this.vel = 0;
-            this.acc = 0;
+        if (auxPos > this.road().length()) {
+            this.pos = (auxPos - this.road().length()) + len;
             this.road().removeCar(this);
             if (this.currentRoadIndex < this.route.size() - 1) {
                 this.currentRoadIndex++;
                 this.route.get(this.currentRoadIndex).addCar(this);
             }
         } else {
-            this.pos += this.vel;
+            this.pos = auxPos;
+            this.nextAcc = 0;
         }
     }
 }
