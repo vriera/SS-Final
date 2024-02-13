@@ -10,11 +10,11 @@ import java.util.Date;
 
 public class Main {
     public static void main(String[] args) {
-//        Config config = new Config();
-//        config.initConfig();
-//        Simulation simulation = new Simulation(config.timeStep, config);
-//        JSONObject staticData = simulation.serializeStaticData();
-//        saveInJSONFile(generateUniqueFileName(), staticData);
+        Config config = new Config();
+        config.initConfig();
+        Simulation simulation = new Simulation(config.timeStep, config);
+        JSONObject staticData = simulation.serializeStaticData();
+        saveInJSONFile(generateUniqueFileName(), staticData);
     }
 
     private static void saveInJSONFile(String fileName, JSONObject data) {

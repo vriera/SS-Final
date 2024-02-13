@@ -11,7 +11,7 @@ public class Node{
     private List<Road> outboundRoads;
     private List<Road> inboundRoads;
 
-    private List<Boolean> inboundRoadsStops;
+    private List<Boolean> inboundRoadsStops = new ArrayList<>();
     public List<Road> getOutboundRoads() {
         return outboundRoads;
     }
