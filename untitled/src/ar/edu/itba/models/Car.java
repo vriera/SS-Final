@@ -88,7 +88,7 @@ public class Car {
             if (pos >= currentRoad.length() - currentRoad.yellowZoneLength()) {
                 velMax *= config.yellowZoneSpeedMul;
             }
-            this.acc = config.maximumAcceleration * (1 - Math.pow(this.vel / config.maximumDesiredSpeed, 4));
+            this.acc = config.maximumAcceleration * (1 - Math.pow(this.vel / velMax, 4));
             isStopped = false;
             boolean isLeader = currentRoad.peekHeadCar() == this;
             double alpha = 0; // Alpha is the interaction acceleration
