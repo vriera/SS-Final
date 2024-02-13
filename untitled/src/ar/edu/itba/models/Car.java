@@ -122,7 +122,7 @@ public class Car {
                 this.route.get(this.currentRoadIndex).addCar(this);
             }
             this.acc = this.nextAcc;
-            this.vel += Math.max(0, this.acc * deltaTime);
+            this.vel = Math.max(0, this.vel + this.acc * deltaTime);
         } else {
             this.pos = auxPos;
         }
