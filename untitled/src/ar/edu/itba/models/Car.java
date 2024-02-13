@@ -108,13 +108,13 @@ public class Car {
                 alpha = (config.minimumDesiredDistance + Math.max(0, config.reactionTime * this.vel + deltaV * this.vel / Math.sqrt(2 * config.maximumAcceleration * config.maximumDeceleration))) / deltaX;
             }
 
-            this.nextAcc = Math.max(0, config.maximumAcceleration * (1 - Math.pow(this.vel / velMax, config.accelerationExponent)) - Math.pow(alpha, 2));
+            this.nextAcc = config.maximumAcceleration * (1 - Math.pow(this.vel / velMax, config.accelerationExponent)) - Math.pow(alpha, 2);
         }
     }
 
     public void update(double deltaTime) {
         this.acc = this.nextAcc;
-        this.vel += this.acc * deltaTime;
+        this.vel += Math.max(0, this.acc * deltaTime);
         double auxPos = this.pos + this.vel * deltaTime + this.acc * Math.pow(deltaTime, 2) / 2;
 
         if (auxPos > this.road().length()) {
