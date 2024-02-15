@@ -86,7 +86,7 @@ public class AStar implements PathFinder{
                     PathfindingNode neighbourPath = new PathfindingNode(neighbourNode ,
                             r ,
                             current ,
-                            r.length() ,
+                            r.length() + current.getgScore(),
                             heuristic.distance(neighbourNode,targetRoadStart));
 
                     PathfindingNode pastPath = openedOrdered.get(neighbourNode);

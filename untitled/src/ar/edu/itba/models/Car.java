@@ -4,6 +4,7 @@ import ar.edu.itba.Config;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Car {
     private double pos;
@@ -13,11 +14,20 @@ public class Car {
     private List<Road> route;
     private double finalRoadPos;
     private int currentRoadIndex;
+    private int id;
     private boolean isStopped = false;
 
     private double nextAcc = 0;
 
-    public Car(List<Road> route, double startRoadPos, double finalRoadPos, double carLength) {
+    private boolean active;
+
+    public Car(List<Road> route, double startRoadPos, double finalRoadPos, double carLength , int id) {
+        this.id = id;
+        setupCar(route,startRoadPos,finalRoadPos,carLength);
+    }
+    public Car(int id){ this.id = id;}
+
+    public void setupCar(List<Road> route, double startRoadPos, double finalRoadPos, double carLength){
         if (route == null || route.size() == 0) {
             throw new IllegalArgumentException("route must be non-empty");
         }
@@ -28,13 +38,30 @@ public class Car {
         }
         System.out.println(routeString.toString());
         this.route = route;
-        this.pos = 0;
+        this.pos = startRoadPos;
         this.vel = 0;
         this.acc = 0;
         this.currentRoadIndex = 0;
         this.finalRoadPos = finalRoadPos;
+        this.len= carLength;
+        active = true;
     }
 
+    public void deactivate(){
+        active = false;
+        this.currentRoadIndex = -1;
+    }
+
+    public boolean isStopped(){
+        return isStopped;
+    }
+    public int id(){
+        return this.id;
+    }
+
+    public boolean isActive(){
+        return active;
+    }
     public double pos() {
         return pos;
     }
@@ -127,5 +154,10 @@ public class Car {
             this.pos = auxPos;
         }
         this.nextAcc = 0;
+    }
+
+    @Override
+    public int hashCode(){
+        return Objects.hash(this.id);
     }
 }

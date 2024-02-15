@@ -29,6 +29,7 @@ public class Node{
         this.y = y;
         this.outboundRoads = new ArrayList<>();
         this.inboundRoads = new ArrayList<>();
+        this.inboundRoadsStops = new ArrayList<>();
     }
     public int id(){
         return id;

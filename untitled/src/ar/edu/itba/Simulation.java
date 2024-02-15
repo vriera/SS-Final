@@ -4,6 +4,7 @@ import ar.edu.itba.models.Axis;
 import ar.edu.itba.models.Car;
 import ar.edu.itba.models.Node;
 import ar.edu.itba.models.Road;
+import ar.edu.itba.output.OutputGenerator;
 import ar.edu.itba.pathfinding.AStar;
 import ar.edu.itba.pathfinding.PathFinder;
 import ar.edu.itba.pathfinding.heuristics.EuclidianDistance;
@@ -21,7 +22,7 @@ public class Simulation {
 
     private Node[][] nodes;
     private ArrayList<Road> roads = new ArrayList<>();
-    private ArrayList<Car> cars = new ArrayList<>();
+    private CarPool carPool;
     private ArrayList<Road> borderRoads = new ArrayList<>();
 
     private PathFinder pathFinder = new AStar(new EuclidianDistance());
@@ -29,6 +30,7 @@ public class Simulation {
     private final Config config;
 
     public Simulation(double timeStep, Config config) {
+
         this.config = config;
         this.nodes = new Node[config.totalBlocksWidth + 1][config.totalBlocksHeight + 1];
         this.generateGrid();
@@ -36,17 +38,12 @@ public class Simulation {
         for (Road road : roads) {
             System.out.println(road);
         }
-//        int i = 0;
-//        while (i < 10000) {
-//            i++;
-//            placeCar();
-//        }
-
         int i = 0;
-        while (i < 0) {
+        while (i < 4) {
             i++;
-            placeCar();
+            placeCar(i);
         }
+        this.carPool = new CarPool(config.cars);
     }
 
     public void runStep() {
@@ -55,33 +52,49 @@ public class Simulation {
             Arrays.stream(row).parallel().forEach(Node::update);
         });
         // Then, update the cars
-        cars.stream().parallel().forEach(car -> {
+        this.carPool.activeCars().stream().parallel().forEach(car -> {
             car.calculateValues(config.timeStep, config);
         });
-        cars.stream().forEach(car -> {
-            car.update(config.timeStep);
-        });
+        this.carPool.activeCars().forEach(Car::update);
 
     }
 
-    public Car placeCar(){
+    public Car placeCar(int id){
         Random rand =  new Random();
         //0 -> y border , 1 -> x border;
-        Road startingRoad = borderRoads.get(rand.nextInt(borderRoads.size()));
+        Road startingRoad =  borderRoads.get(rand.nextInt(borderRoads.size()));
         Road endingRoad;
+        boolean placed =false;
+
+//        //get starting road
+//        do {
+//            double freeSpaceAfterPlacement = 0;
+//            do {
+//                startingRoad = borderRoads.get(rand.nextInt(borderRoads.size()));
+//                //get a road that has space for a car to be placed
+//                int count = startingRoad.carCount();
+//                freeSpaceAfterPlacement = startingRoad.length() - count * (config.carLength + config.minimumDesiredDistance);
+//
+//            } while (freeSpaceAfterPlacement <= 2 *(config.carLength + config.minimumDesiredDistance));
+//
+//
+//        }while (!placed);
+
+
         do {
             endingRoad = roads.get(rand.nextInt(roads.size()));
         }
         while (endingRoad.equals(startingRoad));
+
         List<Road> path = this.pathFinder.generatePath(nodes,startingRoad, endingRoad);
 
-//        System.out.println("\n");
-//        System.out.println("New path from:" + startingRoad.end() + " to: " + endingRoad.end());
-//        for (Road road : path) {
-//            System.out.println(road);
-//        }
-//        System.out.println("\n");
-        return new Car(path,0,0, config.carLength);
+        System.out.println("\n");
+        System.out.println("New path from:" + startingRoad.end() + " to: " + endingRoad.end());
+        for (Road road : path) {
+            System.out.println(road);
+        }
+        System.out.println("\n");
+        return new Car(path,0,0, config.carLength , id);
     }
 
     public ArrayList<Road> generateGrid() {

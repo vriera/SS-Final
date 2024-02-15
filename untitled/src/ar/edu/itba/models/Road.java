@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Road {
+    private static int nextId = 0;
+    private int id;
     private Node start;
     private Node end;
     private double length;
@@ -19,6 +21,8 @@ public class Road {
         this.direction = direction;
         this.yellowZoneLength = yellowZoneLength;
         this.redZoneLength = redZoneLength;
+        this.id = nextId;
+        nextId++;
         start.addRoad(this);
         end.addRoad(this);
   }
@@ -50,7 +54,9 @@ public class Road {
     public void removeCar(Car car){
         cars.remove(car);
     }
-
+    public int id(){
+        return id;
+    }
     @Override
     public boolean equals(Object o ){
         if(o instanceof  Road){
@@ -94,6 +100,9 @@ public class Road {
         return cars.get(cars.size()-1);
     }
 
+    public int carCount(){
+        return cars.size();
+    }
     public Car getCarAhead(Car car){
         if (cars.size() == 0){
             throw new IllegalArgumentException("No cars in road");

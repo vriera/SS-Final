@@ -21,6 +21,7 @@ public class Config {
     public double yellowZoneSpeedMul = 0;
     public double redZoneLength = 0;
 
+    public int cars = 0;
     // Singleton
     public Config() {
     }
@@ -44,6 +45,7 @@ public class Config {
 
         JSONObject config = new JSONObject(lines.toString());
         carLength = config.getDouble("carLength");
+        cars = config.getInt("cars");
         minimumDesiredDistance = config.getDouble("minimumDesiredDistance");
         maximumDesiredSpeed = config.getDouble("maximumDesiredSpeed");
         accelerationExponent = config.getDouble("accelerationExponent");

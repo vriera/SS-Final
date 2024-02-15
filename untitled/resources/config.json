@@ -11,5 +11,6 @@
   "timeStep": 0.1,
   "yellowZoneLength": 20.0,
   "yellowZoneSpeedMul": 0.5,
-  "redZoneLength": 5.0
+  "redZoneLength": 5.0,
+  "cars": 100
 }
