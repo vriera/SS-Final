@@ -81,6 +81,7 @@ public class Simulation {
             carsToRemove.forEach(x -> this.carPool.removeCar(x));
             removedCars+= carsToRemove.size();
         }
+
         System.out.println("Cars placed: " + placedCars + " cars removed: " + removedCars );
         System.out.println("Time: " + time);
         System.out.println(snapshots.size());
