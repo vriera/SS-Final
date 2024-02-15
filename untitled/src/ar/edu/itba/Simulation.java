@@ -117,7 +117,11 @@ public class Simulation {
 
 
         Car c = carPool.getFreeCar();
-        c.setupCar(path,50,50,config.carLength);
+        double starting_pos = (rand.nextDouble() * (startingRoad.length() - (config.yellowZoneLength * 2 ) ) ) + config.yellowZoneLength;
+        double final_pos = rand.nextDouble() * endingRoad.length();
+//        System.out.println(" at  : "  + starting_pos + " to " +final_pos);
+        c.setupCar(path,starting_pos,final_pos,config.carLength);
+
         startingRoad.addCar(c);
         this.placedCars++;
         return c;
