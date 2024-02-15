@@ -10,6 +10,7 @@ JSONArray dynamic;
 JSONObject data;
 ArrayList<Road> roads;
 ArrayList<Node> nodes;
+ArrayList<Integer> roadColors;
 
 Float blockGap = 0.25;
 void setup() {
@@ -27,6 +28,8 @@ void setup() {
   
   nodes = new ArrayList<Node>();
   roads = new ArrayList<Road>();
+  roadColors = new ArrayList<Integer>();
+  
   for (int i = 0; i < nodesData.size(); i++) {
     JSONObject node = nodesData.getJSONObject(i);
     int id = i;
@@ -35,13 +38,18 @@ void setup() {
     nodes.add(new Node(id, x, y));
   }
   
+  colorMode(HSB);
   for (int i = 0; i < roadsData.size(); i++) {
     JSONObject data = roadsData.getJSONObject(i);
     int startNode = data.getInt("start");
     int endNode = data.getInt("end");
     String dir = data.getString("d");
-    roads.add(new Road(nodes.get(startNode), nodes.get(endNode), dir));
+    roads.add(new Road(i, nodes.get(startNode), nodes.get(endNode), dir));
+    roadColors.add(color(random(256), 255, 255));
   }
+  colorMode(RGB);
+  
+  
   
   drawBlocks();
 }
@@ -63,7 +71,7 @@ void drawBlocks() {
     
 }
 
-void drawCar(Road road, float pos) {
+void drawCar(Road road, float pos, color col) {
   float blockW = (width - 2*borders) / totalBlocksWidth;
   float sclL = (carLength / 100.0) * blockW;
   String dir = road.dir;
@@ -73,7 +81,7 @@ void drawCar(Road road, float pos) {
   float y = 0;
   float wMult = 1;
   float hMult = 1;
-  fill(0, 0, 255);
+  fill(roadColors.get(road.id);
   noStroke();
   if (dir.equals("N") || dir.equals("S")) {
     x = n1.x;
