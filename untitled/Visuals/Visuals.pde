@@ -71,7 +71,7 @@ void drawBlocks() {
     
 }
 
-void drawCar(Road road, float pos, color col) {
+void drawCar(Road road, float pos) {
   float blockW = (width - 2*borders) / totalBlocksWidth;
   float sclL = (carLength / 100.0) * blockW;
   String dir = road.dir;
@@ -81,7 +81,7 @@ void drawCar(Road road, float pos, color col) {
   float y = 0;
   float wMult = 1;
   float hMult = 1;
-  fill(roadColors.get(road.id);
+  fill(roadColors.get(road.id));
   noStroke();
   if (dir.equals("N") || dir.equals("S")) {
     x = n1.x;

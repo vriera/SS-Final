@@ -5,6 +5,7 @@ class Road {
   int id;
   
   Road(int id, Node s, Node e, String d) {
+    this.id = id;
     start = s;
     end = e;
     dir = d;
