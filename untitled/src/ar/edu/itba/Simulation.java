@@ -43,6 +43,7 @@ public class Simulation {
     }
 
     public void runStep() {
+        System.out.println("Time: " + time);
         // First, update the nodes
         Arrays.stream(nodes).parallel().forEach(row -> {
             Arrays.stream(row).parallel().forEach(Node::update);
@@ -59,6 +60,7 @@ public class Simulation {
         if(placedCars < config.cars)
              generateCars();
 
+        time += config.timeStep;
     }
     private void generateCars(){
         List<Road> roadList = borderRoads.stream().filter( (road -> road.carCount() == 0)).collect(Collectors.toList());

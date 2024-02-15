@@ -148,11 +148,12 @@ public class Car {
                 this.currentRoadIndex++;
                 this.route.get(this.currentRoadIndex).addCar(this);
             }
-            this.acc = this.nextAcc;
-            this.vel = Math.max(0, this.vel + this.acc * deltaTime);
         } else {
             this.pos = auxPos;
         }
+        this.acc = this.nextAcc;
+        System.out.println("New Vel: " + (this.vel + this.acc * deltaTime));
+        this.vel = Math.max(0, this.vel + this.acc * deltaTime);
         if(this.currentRoadIndex == this.route.size() - 1 && this.pos >= this.finalRoadPos){
             deactivate();
             System.out.println("llegue!: " + this);

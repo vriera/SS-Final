@@ -17,7 +17,7 @@ public class Main {
         Config config = new Config();
         config.initConfig();
         Simulation simulation = new Simulation(config.timeStep, config);
-        long i = 10000000000L;
+        long i = 5;
         while (i>0){
             simulation.runStep();
             i--;
