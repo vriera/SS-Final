@@ -17,12 +17,11 @@ public class Main {
         Config config = new Config();
         config.initConfig();
         Simulation simulation = new Simulation(config.timeStep, config);
-        JSONObject staticData = simulation.serializeStaticData();
-        saveInJSONFile(generateUniqueFileName(), staticData);
-
-        Config config = new Config();
-        config.initConfig();
-        Simulation simulation = new Simulation(config.timeStep, config);
+        long i = 10000000000L;
+        while (i>0){
+            simulation.runStep();
+            i--;
+        }
         JSONObject staticData = simulation.serializeStaticData();
         String folder = OutputGenerator.createStaticInfo(null,  staticData);
         OutputGenerator.initializeDynamicWriter(folder);

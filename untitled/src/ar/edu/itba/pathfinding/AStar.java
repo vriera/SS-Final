@@ -16,10 +16,17 @@ public class AStar implements PathFinder{
 
     private HashMap<Integer , List<Road> > calculatedPath;
 
+    private double turnWeight = 50;
     public AStar(Heuristic heuristic) {
         this.heuristic = heuristic;
         calculatedPath = new HashMap<>();
 
+    }
+
+    public AStar(Heuristic heuristic , double turnWeight) {
+        this.heuristic = heuristic;
+        calculatedPath = new HashMap<>();
+        this.turnWeight = turnWeight;
     }
 
 //    private int getKeyForPath(Node staringNode, Node goalNode){
@@ -42,6 +49,12 @@ public class AStar implements PathFinder{
         return out;
     }
 
+    private double calculateGScore(Road fromRoad , Road toRoad , double pastGScore){
+        double turnScore = 0;
+        if(fromRoad.direction() != toRoad.direction())
+            turnScore = 1 * turnWeight;
+        return fromRoad.length() + pastGScore + turnScore;
+    }
     @Override
     public List<Road> generatePath(Node[][] nodes, Road startingRoad, Road targetRoad) {
         Node targetNode = targetRoad.end();
@@ -56,7 +69,7 @@ public class AStar implements PathFinder{
                 0 ,
                 heuristic.distance(startingRoad.end(),targetNode));
 
-        System.out.println("Path from: "  + startingRoad.toString() + " to: " + targetRoad.toString() );
+//        System.out.println("Path from: "  + startingRoad.toString() + " to: " + targetRoad.toString() );
         Set<Node> visitedNodes = new HashSet<>();
         HashedTreeSet openedOrdered = new HashedTreeSet();
 
@@ -65,8 +78,8 @@ public class AStar implements PathFinder{
         PathfindingNode current;
         while(!openedOrdered.isEmpty()) {
             current = openedOrdered.first();
-            System.out.println("Looking at node: " + current.getNode().toString());
-            System.out.println("Looking with outbound roads: ");
+//            System.out.println("Looking at node: " + current.getNode().toString());
+//            System.out.println("Looking with outbound roads: ");
             for(Road r : current.getNode().getOutboundRoads())
                 System.out.println(r.toString());
 
@@ -75,29 +88,31 @@ public class AStar implements PathFinder{
 
             openedOrdered.remove(current);
             visitedNodes.add(current.getNode());
-            System.out.println("visited nodes: ");
-            for( Node n : visitedNodes)
-                System.out.println(n.toString());
+//            System.out.println("visited nodes: ");
+//            for( Node n : visitedNodes)
+//                System.out.println(n.toString());
 
             for(Road r : current.getNode().getOutboundRoads()){
-                System.out.println("looking at road: " + r.toString() );
+//                System.out.println("looking at road: " + r.toString() );
                 Node neighbourNode = r.end();
                 if(!visitedNodes.contains(neighbourNode)){
                     PathfindingNode neighbourPath = new PathfindingNode(neighbourNode ,
                             r ,
                             current ,
-                            r.length() + current.getgScore(),
+//                            r.length() + current.getgScore(),
+                            calculateGScore(current.getRoad(),r,current.getgScore()),
                             heuristic.distance(neighbourNode,targetRoadStart));
 
                     PathfindingNode pastPath = openedOrdered.get(neighbourNode);
                     if(pastPath == null || neighbourPath.compareTo(pastPath) < 0)
                         openedOrdered.update(neighbourPath);
-                }else{
-                    System.out.println("node has been already visited");
                 }
+//                else{
+//                    System.out.println("node has been already visited");
+//                }
 
             }
-            System.out.println(openedOrdered);
+//            System.out.println(openedOrdered);
 
         }
         throw new RuntimeException("Path not found");

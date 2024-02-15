@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 public class Simulation {
     private final double METERS_PER_BLOCK = 100;
@@ -24,11 +25,10 @@ public class Simulation {
     private ArrayList<Road> roads = new ArrayList<>();
     private CarPool carPool;
     private ArrayList<Road> borderRoads = new ArrayList<>();
-
     private PathFinder pathFinder = new AStar(new EuclidianDistance());
     private double time = 0;
     private final Config config;
-
+    private int placedCars =0;
     public Simulation(double timeStep, Config config) {
 
         this.config = config;
@@ -39,10 +39,6 @@ public class Simulation {
             System.out.println(road);
         }
         int i = 0;
-        while (i < 4) {
-            i++;
-            placeCar(i);
-        }
         this.carPool = new CarPool(config.cars);
     }
 
@@ -55,31 +51,30 @@ public class Simulation {
         this.carPool.activeCars().stream().parallel().forEach(car -> {
             car.calculateValues(config.timeStep, config);
         });
-        this.carPool.activeCars().forEach(Car::update);
+        this.carPool.activeCars().forEach( car -> car.update(config.timeStep));
+        //deactivate cars
+        List<Car> carsToDeactivate = this.carPool.activeCars().parallelStream().filter( x -> !x.isActive()).toList();
+        carsToDeactivate.forEach(x-> carPool.removeCar(x));
+        if(placedCars < config.cars)
+             generateCars();
 
     }
-
-    public Car placeCar(int id){
+    private void generateCars(){
+        List<Road> roadList = borderRoads.stream().filter( (road -> road.carCount() == 0)).collect(Collectors.toList());
+        if(roadList.isEmpty())
+            return;
+        placeCar( roadList);
+    }
+    private Car placeCar( List<Road> roadList){
         Random rand =  new Random();
         //0 -> y border , 1 -> x border;
-        Road startingRoad =  borderRoads.get(rand.nextInt(borderRoads.size()));
+        Road startingRoad ;
         Road endingRoad;
-        boolean placed =false;
 
-//        //get starting road
-//        do {
-//            double freeSpaceAfterPlacement = 0;
-//            do {
-//                startingRoad = borderRoads.get(rand.nextInt(borderRoads.size()));
-//                //get a road that has space for a car to be placed
-//                int count = startingRoad.carCount();
-//                freeSpaceAfterPlacement = startingRoad.length() - count * (config.carLength + config.minimumDesiredDistance);
-//
-//            } while (freeSpaceAfterPlacement <= 2 *(config.carLength + config.minimumDesiredDistance));
-//
-//
-//        }while (!placed);
-
+        int index = rand.nextInt( 0 ,roadList.size());
+        //get starting road
+        startingRoad = roadList.get(index);
+        roadList.remove(index);
 
         do {
             endingRoad = roads.get(rand.nextInt(roads.size()));
@@ -94,7 +89,11 @@ public class Simulation {
             System.out.println(road);
         }
         System.out.println("\n");
-        return new Car(path,0,0, config.carLength , id);
+        Car c = carPool.getFreeCar();
+        c.setupCar(path,50,50,config.carLength);
+        startingRoad.addCar(c);
+        this.placedCars++;
+        return c;
     }
 
     public ArrayList<Road> generateGrid() {
@@ -129,19 +128,18 @@ public class Simulation {
                 }
 
                 //agregar el road en la direccion y
-                if (i < config.totalBlocksWidth){
+                if (i < config.totalBlocksWidth) {
                     if (j % 2 != 0) {
-                        auxRoad = new Road(nodes[i][j], nodes[i + 1][j] , Axis.SOUTH, config.yellowZoneLength, config.redZoneLength);
+                        auxRoad = new Road(nodes[i][j], nodes[i + 1][j], Axis.SOUTH, config.yellowZoneLength, config.redZoneLength);
                         roads.add(auxRoad);
                     } else {
-                        auxRoad = new Road(nodes[i + 1][j], nodes[i][j] , Axis.NORTH , config.yellowZoneLength, config.redZoneLength);
+                        auxRoad = new Road(nodes[i + 1][j], nodes[i][j], Axis.NORTH, config.yellowZoneLength, config.redZoneLength);
                         roads.add(auxRoad);
                     }
-                    if(j ==0 || j == config.totalBlocksWidth){
+                    if (j == 0 || j == config.totalBlocksWidth) {
                         borderRoads.add(auxRoad);
                     }
                 }
-
             }
         }
         return roads;

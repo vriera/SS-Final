@@ -117,7 +117,7 @@ public class Car {
             }
             this.acc = config.maximumAcceleration * (1 - Math.pow(this.vel / velMax, 4));
             isStopped = false;
-            boolean isLeader = currentRoad.peekHeadCar() == this;
+            boolean isLeader = currentRoad.peekHeadCar().equals(this);
             double alpha = 0; // Alpha is the interaction acceleration
             Car nextCar = null;
             if (!isLeader) {
@@ -152,6 +152,21 @@ public class Car {
             this.vel = Math.max(0, this.vel + this.acc * deltaTime);
         } else {
             this.pos = auxPos;
+        }
+        if(this.currentRoadIndex == this.route.size() - 1 && this.pos >= this.finalRoadPos){
+            deactivate();
+            System.out.println("llegue!: " + this);
+        }else{
+            StringBuilder b = new StringBuilder();
+            b.append("Car places at: ");
+            b.append(route.get(this.currentRoadIndex));
+            b.append(" pos: ");
+            b.append(this.pos);
+            b.append(" vel: ");
+            b.append(this.vel);
+            b.append(" acc: ");
+            b.append(this.acc);
+            System.out.println(b);
         }
         this.nextAcc = 0;
     }
