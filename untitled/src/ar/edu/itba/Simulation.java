@@ -55,6 +55,7 @@ public class Simulation {
         //deactivate cars
         List<Car> carsToDeactivate = this.carPool.activeCars().parallelStream().filter( x -> !x.isActive()).toList();
         carsToDeactivate.forEach(x-> carPool.removeCar(x));
+        carsToDeactivate.forEach(x -> x.road().removeCar(x));
         if(placedCars < config.cars)
              generateCars();
 

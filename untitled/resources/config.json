@@ -6,11 +6,11 @@
   "accelerationExponent": 3.0,
   "maximumAcceleration": 2.78,
   "maximumDeceleration": 4.57,
-  "totalBlocksWidth": 19,
-  "totalBlocksHeight": 19,
-  "timeStep": 0.1,
+  "totalBlocksWidth": 3,
+  "totalBlocksHeight": 3,
+  "timeStep": 0.5,
   "yellowZoneLength": 20.0,
   "yellowZoneSpeedMul": 0.5,
   "redZoneLength": 5.0,
-  "cars": 100
+  "cars": 1
 }
