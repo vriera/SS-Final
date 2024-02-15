@@ -12,7 +12,7 @@
   "yellowZoneLength": 20.0,
   "yellowZoneSpeedMul": 0.5,
   "redZoneLength": 5.0,
-  "cars": 100,
+  "cars": 1,
   "simulationTime" : 1800,
   "spawnTime" : 600
 }

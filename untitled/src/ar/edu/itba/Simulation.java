@@ -52,19 +52,37 @@ public class Simulation {
             car.calculateValues(config.timeStep, config);
         });
         this.carPool.activeCars().forEach( car -> car.update(config.timeStep));
-        //deactivate cars
-        List<Car> carsToDeactivate = this.carPool.activeCars().parallelStream().filter( x -> !x.isActive()).toList();
-        carsToDeactivate.forEach(x-> carPool.removeCar(x));
-        if(placedCars < config.cars)
-             generateCars();
 
-        time += config.timeStep;
+
+        List<Car> carsToRemove = this.carPool.activeCars().stream().filter(x-> x.isActive()).toList();
+        carsToRemove.forEach(x -> this.carPool.removeCar(x));
     }
-    private void generateCars(){
+
+    public void runSimulation(){
+        double nextSpawnTime = 0;
+        double spawnRate = (double) config.cars / config.spawnTime;
+
+        while(time < config.simulationTime){
+            runStep();
+
+            while (placedCars < config.cars && time >= nextSpawnTime ){
+                boolean generated = generateCars();
+                if(!generated)
+                    break;
+                nextSpawnTime += spawnRate;
+            }
+
+        }
+
+    }
+
+
+    private boolean generateCars(){
         List<Road> roadList = borderRoads.stream().filter( (road -> road.carCount() == 0)).collect(Collectors.toList());
         if(roadList.isEmpty())
-            return;
+            return false;
         placeCar( roadList);
+        return true;
     }
     private Car placeCar( List<Road> roadList){
         Random rand =  new Random();
