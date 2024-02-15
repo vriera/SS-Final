@@ -67,15 +67,12 @@ public class Simulation {
             while (placedCars < config.cars && time >= nextSpawnTime ){
                 boolean generated = generateCars();
                 if(!generated) {
-                    System.err.println("No roads available to place car");
                     break;
-                } else {
-                    System.out.println("Car placed at time: " + time);
                 }
                 nextSpawnTime += spawnRate;
             }
             time += config.timeStep;
-            System.out.print(".");
+//            System.out.print(".");
             snapshots = OutputGenerator.saveSnapshot(this.carPool.activeCars(), snapshots , folder);
             List<Car> carsToRemove = this.carPool.activeCars().stream().filter(x-> !x.isActive()).toList();
             carsToRemove.forEach(x -> this.carPool.removeCar(x));
@@ -118,7 +115,7 @@ public class Simulation {
 
         Car c = carPool.getFreeCar();
         double starting_pos = (rand.nextDouble() * (startingRoad.length() - (config.yellowZoneLength * 2 ) ) ) + config.yellowZoneLength;
-        double final_pos = rand.nextDouble() * endingRoad.length();
+        double final_pos = rand.nextDouble() * (endingRoad.length() - config.carLength);
 //        System.out.println(" at  : "  + starting_pos + " to " +final_pos);
         c.setupCar(path,starting_pos,final_pos,config.carLength);
 

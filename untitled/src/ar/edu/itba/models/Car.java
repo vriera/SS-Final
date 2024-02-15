@@ -116,7 +116,8 @@ public class Car {
                 velMax *= config.yellowZoneSpeedMul;
             }
             isStopped = false;
-            boolean isLeader = currentRoad.peekHeadCar().equals(this);
+            Car headCar = currentRoad.peekHeadCar();
+            boolean isLeader = this.equals(headCar);
             double alpha = 0; // Alpha is the interaction acceleration
             Car nextCar = null;
             if (!isLeader) {
@@ -168,7 +169,7 @@ public class Car {
         if(this.currentRoadIndex == this.route.size() - 1 && this.pos >= this.finalRoadPos){
             this.road().removeCar(this);
             deactivate();
-            System.out.println("llegue!: " + this.id);
+//            System.out.println("llegue!: " + this.id);
         }else{
 //            StringBuilder b = new StringBuilder();
 //            b.append("Car placed at: ");

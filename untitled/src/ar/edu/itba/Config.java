@@ -5,7 +5,7 @@ import org.json.JSONObject;
 import java.io.*;
 
 public class Config {
-    private static final String configPath = "untitled/resources/config.json";
+    private static final String configPath = "./resources/config.json";
 
     public double carLength = 0;
     public double minimumDesiredDistance = 0;

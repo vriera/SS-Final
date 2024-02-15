@@ -1,18 +1,18 @@
 {
   "carLength": 4.6,
-  "minimumDesiredDistance": 2.0,
-  "maximumDesiredSpeed": 16.666666,
+  "minimumDesiredDistance": 5.0,
+  "maximumDesiredSpeed": 6.666666,
   "reactionTime": 0.25,
   "accelerationExponent": 4,
   "maximumAcceleration": 2.78,
   "maximumDeceleration": 4.57,
-  "totalBlocksWidth": 19,
-  "totalBlocksHeight": 19,
+  "totalBlocksWidth": 5,
+  "totalBlocksHeight": 5,
   "timeStep": 0.2,
   "yellowZoneLength": 20.0,
   "yellowZoneSpeedMul": 0.5,
   "redZoneLength": 5.0,
-  "cars": 2000,
+  "cars": 100,
   "simulationTime" : 3600,
-  "spawnTime" : 600
+  "spawnTime" : 3600
 }
