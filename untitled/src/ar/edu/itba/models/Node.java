@@ -72,24 +72,24 @@ public class Node{
 
     public void update() {
         // Hay autos en la red zone?
-        for (int i = 0; i < inboundRoads.size(); i++) {
-            Car car1 = inboundRoads.get(i).peekHeadCar();
-            if (car1 != null) {
-                // If it is inside the red zone and is not stopped
-                if (car1.pos() > car1.road().length() - car1.road().redZoneLength() && !this.inboundRoadsStops.get(i)) {
-                    // Set all the other stops to true
-                    for (int j = 0; j < inboundRoads.size(); j++) {
-                        if (j != i) {
-                            inboundRoadsStops.set(j, true);
-                        }else{
-                            //por las dudas el otro lo pongo en false
-                            inboundRoadsStops.set(j, false);
-                        }
-                    }
-                    return;
-                }
-            }
-        }
+//        for (int i = 0; i < inboundRoads.size(); i++) {
+//            Car car1 = inboundRoads.get(i).peekHeadCar();
+//            if (car1 != null) {
+//                // If it is inside the red zone and is not stopped
+//                if (car1.pos() > car1.road().length() - car1.road().redZoneLength() && !this.inboundRoadsStops.get(i)) {
+//                    // Set all the other stops to true
+//                    for (int j = 0; j < inboundRoads.size(); j++) {
+//                        if (j != i) {
+//                            inboundRoadsStops.set(j, true);
+//                        }else{
+//                            //por las dudas el otro lo pongo en false
+//                            inboundRoadsStops.set(j, false);
+//                        }
+//                    }
+//                    return;
+//                }
+//            }
+//        }
 
         // Hay autos en las yellow zone de indbounds?
         int inbounds = 0;
@@ -112,11 +112,14 @@ public class Node{
         }
 
         if (inbounds == 1) {
-            // Si hay un solo auto en la yellow zone, poner todos los stops en false
+            // Si hay un solo auto en la yellow zone, poner todos los stops en true menos el que tiene el auto
             for (int i = 0; i < inboundRoads.size(); i++) {
-                inboundRoadsStops.set(i, false);
+                if (inboundRoads.get(i).peekHeadCar() != null) {
+                    inboundRoadsStops.set(i, false);
+                } else {
+                    inboundRoadsStops.set(i, true);
+                }
             }
-            // TODO: Check next road last car distance to see if it can cross
             return;
         }
 
@@ -125,11 +128,13 @@ public class Node{
         Car c2 = inboundRoads.get(1).peekHeadCar();
 
         if (!c1.wantsToTurn() || (c1.wantsToTurn() && c2.wantsToTurn())) {
+            System.out.println("Prioridad para quien viene de la derecha");
             inboundRoadsStops.set(0, false);
             inboundRoadsStops.set(1, true);
         }
 
         if (!c2.wantsToTurn()) {
+            System.out.println("Prioridad para quien viene de la izquierda");
             inboundRoadsStops.set(0, true);
             inboundRoadsStops.set(1, false);
         }
