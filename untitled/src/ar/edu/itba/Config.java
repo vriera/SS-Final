@@ -21,6 +21,8 @@ public class Config {
     public double yellowZoneSpeedMul = 0;
     public double redZoneLength = 0;
 
+    public long simulationTime = 0;
+    public long spawnTime = 0;
     public int cars = 0;
     // Singleton
     public Config() {
@@ -58,6 +60,8 @@ public class Config {
         yellowZoneLength = config.getDouble("yellowZoneLength");
         redZoneLength = config.getDouble("redZoneLength");
         yellowZoneSpeedMul = config.getDouble("yellowZoneSpeedMul");
+        simulationTime = config.getLong("simulationTime");
+        spawnTime = config.getLong("spawnTime");
     }
 
     @Override

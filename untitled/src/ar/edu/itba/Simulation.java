@@ -43,7 +43,6 @@ public class Simulation {
     }
 
     public void runStep() {
-        System.out.println("Time: " + time);
         // First, update the nodes
         Arrays.stream(nodes).parallel().forEach(row -> {
             Arrays.stream(row).parallel().forEach(Node::update);
@@ -56,7 +55,6 @@ public class Simulation {
         //deactivate cars
         List<Car> carsToDeactivate = this.carPool.activeCars().parallelStream().filter( x -> !x.isActive()).toList();
         carsToDeactivate.forEach(x-> carPool.removeCar(x));
-        carsToDeactivate.forEach(x -> x.road().removeCar(x));
         if(placedCars < config.cars)
              generateCars();
 
@@ -171,6 +169,9 @@ public class Simulation {
         configData.put("maximumAcceleration", config.maximumAcceleration);
         configData.put("maximumDeceleration", config.maximumDeceleration);
         configData.put("timeStep", config.timeStep);
+        configData.put("simulationTime" , config.simulationTime);
+        configData.put("spawnTime" , config.spawnTime);
+        configData.put("cars" , config.cars);
 
         JSONArray nodesData = new JSONArray();
         data.put("nodes", nodesData);

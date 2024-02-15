@@ -1,15 +1,10 @@
 package ar.edu.itba;
 
-import ar.edu.itba.models.Axis;
 import ar.edu.itba.output.OutputGenerator;
-import org.json.Cookie;
+
 import org.json.JSONObject;
 
-import java.io.FileWriter;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 public class Main {
@@ -17,7 +12,7 @@ public class Main {
         Config config = new Config();
         config.initConfig();
         Simulation simulation = new Simulation(config.timeStep, config);
-        long i = 5;
+        long i = 500;
         while (i>0){
             simulation.runStep();
             i--;

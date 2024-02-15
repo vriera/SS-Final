@@ -113,9 +113,9 @@ public class Car {
         } else {
             double velMax = config.maximumDesiredSpeed;
             if (pos >= currentRoad.length() - currentRoad.yellowZoneLength()) {
+                System.out.println("YELLOW ZONE!");
                 velMax *= config.yellowZoneSpeedMul;
             }
-            this.acc = config.maximumAcceleration * (1 - Math.pow(this.vel / velMax, 4));
             isStopped = false;
             boolean isLeader = currentRoad.peekHeadCar().equals(this);
             double alpha = 0; // Alpha is the interaction acceleration
@@ -134,7 +134,6 @@ public class Car {
                 double deltaV = this.vel() - nextCar.vel();
                 alpha = (config.minimumDesiredDistance + Math.max(0, config.reactionTime * this.vel + deltaV * this.vel / Math.sqrt(2 * config.maximumAcceleration * config.maximumDeceleration))) / deltaX;
             }
-
             this.nextAcc = config.maximumAcceleration * (1 - Math.pow(this.vel / velMax, config.accelerationExponent)) - Math.pow(alpha, 2);
         }
     }
@@ -152,9 +151,9 @@ public class Car {
             this.pos = auxPos;
         }
         this.acc = this.nextAcc;
-        System.out.println("New Vel: " + (this.vel + this.acc * deltaTime));
         this.vel = Math.max(0, this.vel + this.acc * deltaTime);
         if(this.currentRoadIndex == this.route.size() - 1 && this.pos >= this.finalRoadPos){
+            this.road().removeCar(this);
             deactivate();
             System.out.println("llegue!: " + this);
         }else{
