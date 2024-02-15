@@ -5,7 +5,7 @@ import org.json.JSONObject;
 import java.io.*;
 
 public class Config {
-    private static final String configPath = "./resources/config.json";
+    private static final String configPath = "untitled/resources/config.json";
 
     public double carLength = 0;
     public double minimumDesiredDistance = 0;
@@ -29,6 +29,8 @@ public class Config {
     }
 
     public void initConfig() {
+        // Print PWD
+        System.out.println("Working Directory = " + System.getProperty("user.dir"));
         // Read the configPath file
         File file = new File(configPath);
         StringBuilder lines = new StringBuilder();
@@ -40,7 +42,7 @@ public class Config {
                 line = reader.readLine();
             }
         } catch (FileNotFoundException e) {
-            throw new RuntimeException("File not found");
+            throw new RuntimeException("File not found", e);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

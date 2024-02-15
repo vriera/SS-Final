@@ -92,10 +92,6 @@ public class OutputGenerator {
         snapshot.put("s", c_stopped);
         snapshot.put("r", road_id);
         pastSnapshots.add(snapshot);
-        if (pastSnapshots.size() > CHUNK_SIZE) {
-            generateDynamic(pastSnapshots);
-            pastSnapshots = null;
-        }
         return pastSnapshots;
     }
 
@@ -124,10 +120,18 @@ public class OutputGenerator {
                 array.put(o);
             }
             SNAPSHOT_WRITER.write(array.toString());
-            SNAPSHOT_WRITER.flush();
-            SNAPSHOT_WRITER.close();
         } catch (IOException e) {
             throw new RuntimeException("Error writing snapshots", e);
+        }
+        try {
+            SNAPSHOT_WRITER.flush();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            SNAPSHOT_WRITER.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 }
