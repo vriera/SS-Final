@@ -54,7 +54,7 @@ public class Simulation {
         this.carPool.activeCars().forEach( car -> car.update(config.timeStep));
 
 
-        List<Car> carsToRemove = this.carPool.activeCars().stream().filter(x-> x.isActive()).toList();
+        List<Car> carsToRemove = this.carPool.activeCars().stream().filter(x-> !x.isActive()).toList();
         carsToRemove.forEach(x -> this.carPool.removeCar(x));
     }
 

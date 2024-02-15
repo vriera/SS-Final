@@ -36,7 +36,6 @@ public class Car {
             routeString.append(r.toString());
             routeString.append("-->");
         }
-        System.out.println(routeString.toString());
         this.route = route;
         this.pos = startRoadPos;
         this.vel = 0;
@@ -158,7 +157,7 @@ public class Car {
             System.out.println("llegue!: " + this);
         }else{
             StringBuilder b = new StringBuilder();
-            b.append("Car places at: ");
+            b.append("Car placed at: ");
             b.append(route.get(this.currentRoadIndex));
             b.append(" pos: ");
             b.append(this.pos);
