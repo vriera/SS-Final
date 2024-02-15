@@ -101,43 +101,28 @@ public class OutputGenerator {
 
 
     public static void initializeDynamicWriter(String folder) {
-//        comma = false;
         String filePath = DIRECTORY + "/" + folder + "/snapshots.json";
         File myObj = new File(filePath);
         try {
             if (myObj.createNewFile()) {
                 System.out.println("File created: " + myObj.getName());
                 SNAPSHOT_WRITER = new FileWriter(filePath);
-//                SNAPSHOT_WRITER.write("[");
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-//
-//    public static void closeDynamicWriter() {
-//        try {
-//            SNAPSHOT_WRITER.write("]");
-//            SNAPSHOT_WRITER.close();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
+
 
     public static void generateDynamic(List<JSONObject> snapshots) {
         if (snapshots == null || snapshots.size() == 0) {
             throw new RuntimeException("No snapshots to write");
         }
         try {
-//            for (JSONObject o : snapshots) {
-//                if (comma) {
-//                    SNAPSHOT_WRITER.write(",");
-//                }
-//                comma = true;
-//                SNAPSHOT_WRITER.write(o.toString());
-//            }
             JSONArray array = new JSONArray();
-            array.put(snapshots);
+            for (JSONObject o : snapshots) {
+                array.put(o);
+            }
             SNAPSHOT_WRITER.write(array.toString());
             SNAPSHOT_WRITER.flush();
             SNAPSHOT_WRITER.close();
