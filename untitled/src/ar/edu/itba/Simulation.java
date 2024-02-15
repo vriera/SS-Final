@@ -222,6 +222,7 @@ public class Simulation {
             roadsData.put(roadData);
             roadData.put("start", road.start().id());
             roadData.put("end", road.end().id());
+            roadData.put("d", road.direction().toString().substring(0, 1));
         }
         return data;
     }
