@@ -9,10 +9,10 @@
   "totalBlocksWidth": 5,
   "totalBlocksHeight": 5,
   "timeStep": 0.2,
-  "yellowZoneLength": 20.0,
-  "yellowZoneSpeedMul": 0.5,
-  "redZoneLength": 5.0,
-  "cars": 100,
+  "yellowZoneLength": 25.0,
+  "yellowZoneSpeedMul": 0.75,
+  "redZoneLength": 10.0,
+  "cars": 1000,
   "simulationTime" : 3600,
-  "spawnTime" : 3600
+  "spawnTime" : 1200
 }

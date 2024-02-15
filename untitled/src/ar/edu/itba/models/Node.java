@@ -81,6 +81,9 @@ public class Node{
                     for (int j = 0; j < inboundRoads.size(); j++) {
                         if (j != i) {
                             inboundRoadsStops.set(j, true);
+                        }else{
+                            //por las dudas el otro lo pongo en false
+                            inboundRoadsStops.set(j, false);
                         }
                     }
                     return;

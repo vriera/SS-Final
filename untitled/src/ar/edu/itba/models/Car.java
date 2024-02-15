@@ -100,12 +100,17 @@ public class Car {
         return !currentRoad.direction().equals(nextRoad.direction());
     }
 
+    private boolean isHead(){
+        Car headCar = this.road().peekHeadCar();
+        return this.equals(headCar);
+    }
+
     public void calculateValues(double deltaTime, Config config) {
         Road currentRoad = this.road();
         // If I am in the red zone, I must stop
-        if (pos >= currentRoad.length() - currentRoad.redZoneLength()) {
+        if (pos >= currentRoad.length() - currentRoad.redZoneLength() && isHead()) {
             Node endNode = currentRoad.end();
-            if (!endNode.isStopped(currentRoad)) {
+            if (endNode.isStopped(currentRoad)) {
                 isStopped = true;
                 this.nextAcc = - config.maximumDeceleration * this.vel / (config.maximumDesiredSpeed);
             }
@@ -120,20 +125,27 @@ public class Car {
             boolean isLeader = this.equals(headCar);
             double alpha = 0; // Alpha is the interaction acceleration
             Car nextCar = null;
+            Double deltaX = null;
+
             if (!isLeader) {
                 nextCar = currentRoad.getCarAhead(this);
+                deltaX = nextCar.pos() - this.pos() - this.len();
+
             } else {
+                
                 if (currentRoadIndex < route.size() - 1) {
                     nextCar = route.get(currentRoadIndex + 1).peekLastCar();
+                    if(nextCar != null)
+                        deltaX = this.road().length() - this.pos + nextCar.pos() - this.len;
                 }
             }
 
             // Even if is a leader, the next road could be empty
-            if (nextCar != null) {
-                double deltaX = nextCar.pos() - this.pos() - nextCar.len();
+            if (deltaX != null) {
                 double deltaV = this.vel() - nextCar.vel();
                 alpha = (config.minimumDesiredDistance + Math.max(0, config.reactionTime * this.vel + deltaV * this.vel / Math.sqrt(2 * config.maximumAcceleration * config.maximumDeceleration))) / deltaX;
             }
+
             this.nextAcc = config.maximumAcceleration * (1 - Math.pow(this.vel / velMax, config.accelerationExponent)) - Math.pow(alpha, 2);
         }
     }
