@@ -128,13 +128,13 @@ public class Node{
         Car c2 = inboundRoads.get(1).peekHeadCar();
 
         if (!c1.wantsToTurn() || (c1.wantsToTurn() && c2.wantsToTurn())) {
-            System.out.println("Prioridad para quien viene de la derecha");
+//            System.out.println("Prioridad para quien viene de la derecha");
             inboundRoadsStops.set(0, false);
             inboundRoadsStops.set(1, true);
         }
 
         if (!c2.wantsToTurn()) {
-            System.out.println("Prioridad para quien viene de la izquierda");
+//            System.out.println("Prioridad para quien viene de la izquierda");
             inboundRoadsStops.set(0, true);
             inboundRoadsStops.set(1, false);
         }

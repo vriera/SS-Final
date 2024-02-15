@@ -108,12 +108,11 @@ public class Car {
     public void calculateValues(double deltaTime, Config config) {
         Road currentRoad = this.road();
         // If I am in the red zone, I must stop
-        if (pos >= currentRoad.length() - currentRoad.redZoneLength() && isHead()) {
-            Node endNode = currentRoad.end();
-            if (endNode.isStopped(currentRoad)) {
-                isStopped = true;
-                this.nextAcc = - config.maximumDeceleration * this.vel / (config.maximumDesiredSpeed);
-            }
+        Node endNode = currentRoad.end();
+
+        if (pos >= currentRoad.length() - currentRoad.redZoneLength() && isHead() && endNode.isStopped(currentRoad) ) {
+            isStopped = true;
+            this.nextAcc = - config.maximumDeceleration * this.vel / (config.maximumDesiredSpeed);
         } else {
             double velMax = config.maximumDesiredSpeed;
             if (pos >= currentRoad.length() - currentRoad.yellowZoneLength()) {

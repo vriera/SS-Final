@@ -73,10 +73,16 @@ public class Road {
         if (cars.contains(car)){
             throw new IllegalArgumentException("Car already in road");
         };
+        for(int i = 0 ; i < cars.size() ; i++){
+            if(Double.compare( cars.get(i).pos(),car.pos()) < 0) {
+                cars.add(i, car);
+                return;
+            }
+        }
         cars.add(car);
-        cars.sort((Car a, Car b) -> {
-            return Double.compare(a.pos(), b.pos());
-        });
+//        cars.sort((Car b, Car a) -> {
+//            return Double.compare(a.pos(), b.pos());
+//        });
     }
 
     public Car peekHeadCar(){
