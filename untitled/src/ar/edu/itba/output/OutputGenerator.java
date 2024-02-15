@@ -125,8 +125,9 @@ public class OutputGenerator {
 //    }
 
     public static void generateDynamic(List<JSONObject> snapshots) {
-        if (snapshots == null || snapshots.size() == 0)
-            return;
+        if (snapshots == null || snapshots.size() == 0) {
+            throw new RuntimeException("No snapshots to write");
+        }
         try {
 //            for (JSONObject o : snapshots) {
 //                if (comma) {
@@ -138,8 +139,10 @@ public class OutputGenerator {
             JSONArray array = new JSONArray();
             array.put(snapshots);
             SNAPSHOT_WRITER.write(array.toString());
+            SNAPSHOT_WRITER.flush();
+            SNAPSHOT_WRITER.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Error writing snapshots", e);
         }
     }
 }

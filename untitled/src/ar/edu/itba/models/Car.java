@@ -138,9 +138,18 @@ public class Car {
     }
 
     public void update(double deltaTime) {
-        double auxPos = this.pos + this.vel * deltaTime + this.acc * Math.pow(deltaTime, 2) / 2;
+        double auxPos = this.pos + this.vel * deltaTime;
+        if (auxPos < 0) {
+            System.err.println("Is in yellow zone: " + (this.pos >= this.road().length() - this.road().yellowZoneLength()));
+            System.err.println("AuxPos: " + auxPos);
+            System.err.println("Car: " + this);
+            throw new IllegalStateException("Negative position");
+        }
         if (auxPos > this.road().length()) {
-            this.pos = (auxPos - this.road().length()) + len;
+            this.pos = (auxPos - this.road().length());
+            if (this.pos < 0) {
+                throw new IllegalStateException("Negative position while changing road");
+            }
             this.road().removeCar(this);
             if (this.currentRoadIndex < this.route.size() - 1) {
                 this.currentRoadIndex++;
@@ -149,12 +158,17 @@ public class Car {
         } else {
             this.pos = auxPos;
         }
+
+        if (this.pos > this.road().length()) {
+            System.err.println("Car: " + this);
+            throw new IllegalStateException("Position greater than road length");
+        }
         this.acc = this.nextAcc;
         this.vel = Math.max(0, this.vel + this.acc * deltaTime);
         if(this.currentRoadIndex == this.route.size() - 1 && this.pos >= this.finalRoadPos){
             this.road().removeCar(this);
             deactivate();
-            System.out.println("llegue!: " + this);
+            System.out.println("llegue!: " + this.id);
         }else{
 //            StringBuilder b = new StringBuilder();
 //            b.append("Car placed at: ");
@@ -176,7 +190,7 @@ public class Car {
     }
 
     @Override
-    public String toString(){
-        return "Car: id " + id();
+    public String toString() {
+        return "Car{" + "pos=" + pos + ", vel=" + vel + ", acc=" + acc + ", len=" + len + ", finalRoadPos=" + finalRoadPos + ", currentRoadIndex=" + currentRoadIndex + ", id=" + id + ", isStopped=" + isStopped + ", nextAcc=" + nextAcc + ", active=" + active + '}';
     }
 }

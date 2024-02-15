@@ -54,7 +54,7 @@ public class Simulation {
 
     public void runSimulation(String simulationName){
         double nextSpawnTime = 0;
-        double spawnRate = (double) config.cars / config.spawnTime;
+        double spawnRate = (double) config.spawnTime / config.cars;
 
         JSONObject staticData = this.serializeStaticData();
         String folder = OutputGenerator.createStaticInfo(simulationName,  staticData);
@@ -66,8 +66,12 @@ public class Simulation {
 
             while (placedCars < config.cars && time >= nextSpawnTime ){
                 boolean generated = generateCars();
-                if(!generated)
+                if(!generated) {
+                    System.err.println("No roads available to place car");
                     break;
+                } else {
+                    System.out.println("Car placed at time: " + time);
+                }
                 nextSpawnTime += spawnRate;
             }
             time += config.timeStep;
@@ -78,6 +82,8 @@ public class Simulation {
             removedCars+= carsToRemove.size();
         }
         System.out.println("Cars placed: " + placedCars + " cars removed: " + removedCars );
+        System.out.println("Time: " + time);
+        System.out.println(snapshots.size());
         OutputGenerator.generateDynamic(snapshots);
 
     }
