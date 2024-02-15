@@ -22,7 +22,6 @@ public class HashedTreeSet {
     }
 
     public void remove(PathfindingNode element) {
-        System.out.println("removing:" + element);
         if (hashMap.containsKey(element.getNode())) {
             hashMap.remove(element.getNode());
         }

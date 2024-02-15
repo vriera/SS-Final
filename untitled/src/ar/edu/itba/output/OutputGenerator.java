@@ -21,7 +21,7 @@ public class OutputGenerator {
     private final static Integer CHUNK_SIZE = 1000;
     private final static String DIRECTORY = "./outputs";
     private static FileWriter SNAPSHOT_WRITER;
-    private static boolean comma = false;
+//    private static boolean comma = false;
     //Returns folder
 
     public static String generateUniqueFolderName() {
@@ -101,53 +101,45 @@ public class OutputGenerator {
 
 
     public static void initializeDynamicWriter(String folder) {
-        comma = false;
+//        comma = false;
         String filePath = DIRECTORY + "/" + folder + "/snapshots.json";
         File myObj = new File(filePath);
         try {
             if (myObj.createNewFile()) {
                 System.out.println("File created: " + myObj.getName());
                 SNAPSHOT_WRITER = new FileWriter(filePath);
-                SNAPSHOT_WRITER.write("[");
+//                SNAPSHOT_WRITER.write("[");
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
-    public static void closeDynamicWriter() {
-        try {
-            SNAPSHOT_WRITER.write("]");
-            SNAPSHOT_WRITER.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void generateDynamic(List<JSONObject> snapshots) {
-        if (snapshots == null || snapshots.size() == 0)
-            return;
-        try {
-            for (JSONObject o : snapshots) {
-                if (comma) {
-                    SNAPSHOT_WRITER.write(",");
-                }
-                comma = true;
-                SNAPSHOT_WRITER.write(o.toString());
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-}
-
 //
-//    private static void saveInJSONFile(String fileName, JSONObject data) {
-//        try (FileWriter file = new FileWriter("outputs/" + fileName)) {
-//            file.write(data.toString());
-//            file.flush();
+//    public static void closeDynamicWriter() {
+//        try {
+//            SNAPSHOT_WRITER.write("]");
+//            SNAPSHOT_WRITER.close();
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
 //    }
 
+    public static void generateDynamic(List<JSONObject> snapshots) {
+        if (snapshots == null || snapshots.size() == 0)
+            return;
+        try {
+//            for (JSONObject o : snapshots) {
+//                if (comma) {
+//                    SNAPSHOT_WRITER.write(",");
+//                }
+//                comma = true;
+//                SNAPSHOT_WRITER.write(o.toString());
+//            }
+            JSONArray array = new JSONArray();
+            array.put(snapshots);
+            SNAPSHOT_WRITER.write(array.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}

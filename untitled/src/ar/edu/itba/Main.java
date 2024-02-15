@@ -12,14 +12,7 @@ public class Main {
         Config config = new Config();
         config.initConfig();
         Simulation simulation = new Simulation(config.timeStep, config);
-        simulation.runSimulation();
-        JSONObject staticData = simulation.serializeStaticData();
-        String folder = OutputGenerator.createStaticInfo(null,  staticData);
-        OutputGenerator.initializeDynamicWriter(folder);
-        List<JSONObject> snapshots = OutputGenerator.saveSnapshot(Collections.emptySet(), null , folder);
-
-        OutputGenerator.generateDynamic(snapshots);
-        OutputGenerator.closeDynamicWriter();
+        simulation.runSimulation(null);
     }
 
 

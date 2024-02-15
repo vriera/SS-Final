@@ -80,8 +80,8 @@ public class AStar implements PathFinder{
             current = openedOrdered.first();
 //            System.out.println("Looking at node: " + current.getNode().toString());
 //            System.out.println("Looking with outbound roads: ");
-            for(Road r : current.getNode().getOutboundRoads())
-                System.out.println(r.toString());
+//            for(Road r : current.getNode().getOutboundRoads())
+//                System.out.println(r.toString());
 
             if(current.getNode() == targetNode)
                 return getRoadsFromNode(current);

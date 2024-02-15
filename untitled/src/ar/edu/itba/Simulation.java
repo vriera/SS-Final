@@ -12,10 +12,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Simulation {
@@ -29,7 +26,7 @@ public class Simulation {
     private double time = 0;
     private final Config config;
     private int placedCars =0;
-    public Simulation(double timeStep, Config config) {
+    public Simulation(double timeStep, Config config ) {
 
         this.config = config;
         this.nodes = new Node[config.totalBlocksWidth + 1][config.totalBlocksHeight + 1];
@@ -38,7 +35,7 @@ public class Simulation {
         for (Road road : roads) {
             System.out.println(road);
         }
-        int i = 0;
+
         this.carPool = new CarPool(config.cars);
     }
 
@@ -53,16 +50,18 @@ public class Simulation {
         });
         this.carPool.activeCars().forEach( car -> car.update(config.timeStep));
 
-
-        List<Car> carsToRemove = this.carPool.activeCars().stream().filter(x-> !x.isActive()).toList();
-        carsToRemove.forEach(x -> this.carPool.removeCar(x));
     }
 
-    public void runSimulation(){
+    public void runSimulation(String simulationName){
         double nextSpawnTime = 0;
         double spawnRate = (double) config.cars / config.spawnTime;
 
-        while(time < config.simulationTime){
+        JSONObject staticData = this.serializeStaticData();
+        String folder = OutputGenerator.createStaticInfo(simulationName,  staticData);
+        OutputGenerator.initializeDynamicWriter(folder);
+        List<JSONObject> snapshots = new ArrayList<>();
+        long removedCars =0;
+        while(time < config.simulationTime && (carPool.activeCars().size() > 0 || placedCars < config.cars) ){
             runStep();
 
             while (placedCars < config.cars && time >= nextSpawnTime ){
@@ -71,8 +70,15 @@ public class Simulation {
                     break;
                 nextSpawnTime += spawnRate;
             }
-
+            time += config.timeStep;
+            System.out.print(".");
+            snapshots = OutputGenerator.saveSnapshot(this.carPool.activeCars(), snapshots , folder);
+            List<Car> carsToRemove = this.carPool.activeCars().stream().filter(x-> !x.isActive()).toList();
+            carsToRemove.forEach(x -> this.carPool.removeCar(x));
+            removedCars+= carsToRemove.size();
         }
+        System.out.println("Cars placed: " + placedCars + " cars removed: " + removedCars );
+        OutputGenerator.generateDynamic(snapshots);
 
     }
 
@@ -102,12 +108,7 @@ public class Simulation {
 
         List<Road> path = this.pathFinder.generatePath(nodes,startingRoad, endingRoad);
 
-        System.out.println("\n");
-        System.out.println("New path from:" + startingRoad.end() + " to: " + endingRoad.end());
-        for (Road road : path) {
-            System.out.println(road);
-        }
-        System.out.println("\n");
+
         Car c = carPool.getFreeCar();
         c.setupCar(path,50,50,config.carLength);
         startingRoad.addCar(c);

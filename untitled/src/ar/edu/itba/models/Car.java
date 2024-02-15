@@ -48,7 +48,7 @@ public class Car {
 
     public void deactivate(){
         active = false;
-        this.currentRoadIndex = -1;
+//        this.currentRoadIndex = -1;
     }
 
     public boolean isStopped(){
@@ -112,7 +112,7 @@ public class Car {
         } else {
             double velMax = config.maximumDesiredSpeed;
             if (pos >= currentRoad.length() - currentRoad.yellowZoneLength()) {
-                System.out.println("YELLOW ZONE!");
+//                System.out.println("YELLOW ZONE!");
                 velMax *= config.yellowZoneSpeedMul;
             }
             isStopped = false;
@@ -156,16 +156,16 @@ public class Car {
             deactivate();
             System.out.println("llegue!: " + this);
         }else{
-            StringBuilder b = new StringBuilder();
-            b.append("Car placed at: ");
-            b.append(route.get(this.currentRoadIndex));
-            b.append(" pos: ");
-            b.append(this.pos);
-            b.append(" vel: ");
-            b.append(this.vel);
-            b.append(" acc: ");
-            b.append(this.acc);
-            System.out.println(b);
+//            StringBuilder b = new StringBuilder();
+//            b.append("Car placed at: ");
+//            b.append(route.get(this.currentRoadIndex));
+//            b.append(" pos: ");
+//            b.append(this.pos);
+//            b.append(" vel: ");
+//            b.append(this.vel);
+//            b.append(" acc: ");
+//            b.append(this.acc);
+//            System.out.println(b);
         }
         this.nextAcc = 0;
     }
@@ -173,5 +173,10 @@ public class Car {
     @Override
     public int hashCode(){
         return Objects.hash(this.id);
+    }
+
+    @Override
+    public String toString(){
+        return "Car: id " + id();
     }
 }
