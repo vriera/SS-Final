@@ -110,6 +110,56 @@ public class OutputGenerator {
             e.printStackTrace();
         }
     }
+    public static void initializeCarWriter(String folder) {
+        String filePath = DIRECTORY + "/" + folder + "/cars.json";
+        File myObj = new File(filePath);
+        try {
+            if (myObj.createNewFile()) {
+                System.out.println("File created: " + myObj.getName());
+                CARS_WRITER = new FileWriter(filePath);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void generateCarsFiles(List<Car> finalizedCars , List<Car> activeCars) {
+
+        JSONArray c_id = new JSONArray();
+        JSONObject cars = new JSONObject();
+
+        JSONArray c_finished = new JSONArray();
+        JSONArray roads = new JSONArray();
+        for (Car c: finalizedCars) {
+            JSONObject car= new JSONObject();
+            car.put("r" , c.route().stream().map(Road::id).toList());
+            car.put("f" , 1);
+            cars.put(Integer.toString(c.id()) , car);
+        }
+        for (Car c: activeCars) {
+            JSONObject car= new JSONObject();
+            car.put("r" , c.route().stream().map(Road::id).toList());
+            car.put("f" , 0);
+            cars.put(Integer.toString(c.id()) , car);
+        }
+
+
+        try {
+            CARS_WRITER.write(cars.toString());
+        } catch (IOException e) {
+            throw new RuntimeException("Error writing snapshots", e);
+        }
+        try {
+            CARS_WRITER.flush();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            CARS_WRITER.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
     public static void generateDynamic(List<JSONObject> snapshots) {
         if (snapshots == null || snapshots.size() == 0) {
             throw new RuntimeException("No snapshots to write");

@@ -16,12 +16,7 @@ public class AStar implements PathFinder{
 
     private HashMap<Integer , List<Road> > calculatedPath;
 
-    private double turnWeight = 50;
-    public AStar(Heuristic heuristic) {
-        this.heuristic = heuristic;
-        calculatedPath = new HashMap<>();
-
-    }
+    private double turnWeight;
 
     public AStar(Heuristic heuristic , double turnWeight) {
         this.heuristic = heuristic;

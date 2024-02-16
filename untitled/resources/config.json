@@ -13,7 +13,7 @@
   "yellowZoneSpeedMul": 0.75,
   "turnWeight": 0,
   "redZoneLength": 15.0,
-  "cars": 12000,
-  "simulationTime" : 3600,
-  "spawnTime" : 1200
+  "cars": 10,
+  "simulationTime" : 500,
+  "spawnTime" : 20
 }

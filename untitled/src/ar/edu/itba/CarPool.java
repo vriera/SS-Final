@@ -9,12 +9,14 @@ public class CarPool {
     private Queue<Car> freeCars;
     private Set<Car> activeCars;
 
-    private int maxCars;
+    private Set<Car> deactivatedCars;
+
+
 
     public CarPool(int maxCars) {
-        this.maxCars = maxCars;
         this.freeCars = new LinkedList<>();
         this.activeCars = new HashSet<>();
+        this.deactivatedCars = new HashSet<>();
         for (int i = 0; i <= maxCars; i++) {
             freeCars.add(new Car(i));
         }
@@ -31,8 +33,12 @@ public class CarPool {
     public synchronized void removeCar(Car car){
        car.deactivate();
        activeCars.remove(car);
+       deactivatedCars.add(car);
     }
 
+    public Set<Car> getDeactivatedCars() {
+        return deactivatedCars;
+    }
 
     public synchronized Set<Car> activeCars(){
         return this.activeCars;

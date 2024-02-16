@@ -59,6 +59,7 @@ public class Simulation {
         JSONObject staticData = this.serializeStaticData();
         String folder = OutputGenerator.createStaticInfo(simulationName,  staticData);
         OutputGenerator.initializeDynamicWriter(folder);
+        OutputGenerator.initializeCarWriter(folder);
         List<JSONObject> snapshots = new ArrayList<>();
         long removedCars =0;
         while(time < config.simulationTime && (carPool.activeCars().size() > 0 || placedCars < config.cars) ){
@@ -83,6 +84,7 @@ public class Simulation {
         System.out.println("Time: " + time);
         System.out.println(snapshots.size());
         OutputGenerator.generateDynamic(snapshots);
+        OutputGenerator.generateCarsFiles(carPool.getDeactivatedCars().stream().toList() , carPool.activeCars().stream().toList());
 
     }
 

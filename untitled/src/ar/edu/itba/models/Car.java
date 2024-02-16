@@ -21,11 +21,13 @@ public class Car {
 
     private boolean active;
 
+
     public Car(List<Road> route, double startRoadPos, double finalRoadPos, double carLength , int id) {
         this.id = id;
         setupCar(route,startRoadPos,finalRoadPos,carLength);
     }
     public Car(int id){ this.id = id;}
+
 
     public void setupCar(List<Road> route, double startRoadPos, double finalRoadPos, double carLength){
         if (route == null || route.size() == 0) {
@@ -105,6 +107,10 @@ public class Car {
         return this.equals(headCar);
     }
 
+
+    public List<Road> route(){
+        return this.route;
+    }
     public void calculateValues(double deltaTime, Config config) {
         Road currentRoad = this.road();
         // If I am in the red zone, I must stop
