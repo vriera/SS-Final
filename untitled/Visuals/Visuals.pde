@@ -1,4 +1,4 @@
-final String outputFile = "../../outputs/2024-02-15--19-15-10/";
+final String outputFile = "../../outputs/2024-02-15--21-02-02/";
 Integer totalBlocksWidth = 0;
 Integer totalBlocksHeight = 0;
 Integer borders = 20;
@@ -12,7 +12,7 @@ ArrayList<Road> roads;
 ArrayList<Node> nodes;
 ArrayList<Integer> roadColors;
 
-Float blockGap = 0.25;
+Float blockGap = 0.05;
 void setup() {
   size(1200, 1200);
   ellipseMode(CENTER);
@@ -61,17 +61,35 @@ void drawBlocks() {
     float gapY = blockH * blockGap;
     
     //blockH *= (1 - blockGap);
-    fill(150);
+    fill(220);
     noStroke();
     for (int i = 0; i < totalBlocksWidth; i++) {
       for (int j = 0; j < totalBlocksHeight; j++) {
         rect(i*blockW + gapX/2.0 + borders, j*blockH + gapY/2.0 + borders, blockW - gapX, blockH - gapY, gapX/4);
-      }
     }
-    
+  } 
 }
 
-void drawCar(Road road, float pos) {
+void drawRoads() {
+    float mapWidth = totalBlocksWidth * 100;
+    float mapHeight = totalBlocksHeight * 100;
+    float blockW = (width - 2*borders) / totalBlocksWidth;
+    float sclL = (carLength / 100.0) * blockW;
+    strokeWeight(sclL/2.2);
+    stroke(230);
+    for (Road r : roads) {
+      Node n1 = r.start;
+      Node n2 = r.end;
+      float n1x = map(n1.x, 0, mapWidth, borders, width-borders);
+      float n2x = map(n2.x, 0, mapWidth, borders, width-borders);
+      float n1y = map(n1.y, 0, mapHeight, borders, height-borders);
+      float n2y = map(n2.y, 0, mapHeight, borders, height-borders);
+      println("(" + n1x + ", " + n2y + ")");
+      line(n1x, n1y, n2x, n2y);
+    }
+}
+
+void drawCar(Road road, float pos, int stop) {
   float blockW = (width - 2*borders) / totalBlocksWidth;
   float sclL = (carLength / 100.0) * blockW;
   String dir = road.dir;
@@ -81,7 +99,11 @@ void drawCar(Road road, float pos) {
   float y = 0;
   float wMult = 1;
   float hMult = 1;
-  fill(roadColors.get(road.id));
+  if (stop > 0) {
+    fill(51, 51, 51);
+  } else {
+    fill(0, 0, 255);
+  }
   noStroke();
   if (dir.equals("N") || dir.equals("S")) {
     x = n1.x;
@@ -116,21 +138,24 @@ void drawCar(Road road, float pos) {
 void draw() {
   background(255);
   drawBlocks();
+  drawRoads();
   JSONObject snap = dynamic.getJSONObject(snapshotIndex);
   JSONArray ids = snap.getJSONArray("id");
   JSONArray pos = snap.getJSONArray("p");
   JSONArray road = snap.getJSONArray("r");
+  JSONArray stopped = snap.getJSONArray("s");
   for (int i = 0; i < pos.size(); i++) {
     float posI = pos.getFloat(i);
     int roadID = road.getInt(i);
+    int s = stopped.getInt(i);
     Road r = roads.get(roadID);
-    drawCar(r, posI);
+    drawCar(r, posI, s);
   }
   if (frameCount > 0 && frameCount % 2 == 0 && snapshotIndex < simSnaps) {
     snapshotIndex += 1;
     println(snapshotIndex);
   } 
-  if (snapshotIndex == simSnaps) {
+  if (snapshotIndex >= simSnaps) {
     snapshotIndex = 0;
   }
   
