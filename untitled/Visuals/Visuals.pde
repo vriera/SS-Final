@@ -1,4 +1,4 @@
-final String outputFile = "../../outputs/2024-02-15--21-46-46/";
+final String outputFile = "../../outputs/2024-02-15--21-59-40/";
 Integer totalBlocksWidth = 0;
 Integer totalBlocksHeight = 0;
 Integer borders = 20;
@@ -151,14 +151,14 @@ void draw() {
     drawCar(r, posI, s);
   }
   if (frameCount > 0 && frameCount % 1 == 0 && snapshotIndex < simSnaps) {
-    snapshotIndex += 1;
+    snapshotIndex += 2;
     println(snapshotIndex);
   } 
   if (snapshotIndex >= simSnaps) {
     snapshotIndex = 0;
   }
-  //if (frameCount < 20 * 60) {
-  //  saveFrame("data/#####.png");
-  //}
+  if (frameCount < 20 * 60) {
+    saveFrame("data/#####.png");
+  }
   
 }

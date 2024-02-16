@@ -51,7 +51,7 @@ public class OutputGenerator {
         File myObj = new File(filePath);
         try {
             if (myObj.createNewFile()) {
-                System.out.println("File created: " + myObj.getName());
+//                System.out.println("File created: " + myObj.getName());
                 FileWriter myWriter = new FileWriter(filePath);
                 myWriter.write(jsonObject.toString());
                 myWriter.close();
@@ -103,7 +103,7 @@ public class OutputGenerator {
         File myObj = new File(filePath);
         try {
             if (myObj.createNewFile()) {
-                System.out.println("File created: " + myObj.getName());
+//                System.out.println("File created: " + myObj.getName());
                 SNAPSHOT_WRITER = new FileWriter(filePath);
             }
         } catch (IOException e) {
@@ -115,7 +115,7 @@ public class OutputGenerator {
         File myObj = new File(filePath);
         try {
             if (myObj.createNewFile()) {
-                System.out.println("File created: " + myObj.getName());
+//                System.out.println("File created: " + myObj.getName());
                 CARS_WRITER = new FileWriter(filePath);
             }
         } catch (IOException e) {

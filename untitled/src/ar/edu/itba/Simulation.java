@@ -8,6 +8,7 @@ import ar.edu.itba.output.OutputGenerator;
 import ar.edu.itba.pathfinding.AStar;
 import ar.edu.itba.pathfinding.PathFinder;
 import ar.edu.itba.pathfinding.heuristics.EuclidianDistance;
+import ar.edu.itba.pathfinding.heuristics.ManhattanDistance;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -32,10 +33,10 @@ public class Simulation {
         this.nodes = new Node[config.totalBlocksWidth + 1][config.totalBlocksHeight + 1];
         this.generateGrid();
         this.initIntersectionPriorities();
-        for (Road road : roads) {
-            System.out.println(road);
-        }
-        pathFinder = new AStar(new EuclidianDistance() , config.turnWeight);
+//        for (Road road : roads) {
+//            System.out.println(road);
+//        }
+        pathFinder = new AStar(new ManhattanDistance() , config.turnWeight);
         this.carPool = new CarPool(config.cars);
     }
 
@@ -53,6 +54,7 @@ public class Simulation {
     }
 
     public void runSimulation(String simulationName){
+        Road.resetId();
         double nextSpawnTime = 0;
         double spawnRate = (double) config.spawnTime / config.cars;
 
@@ -81,8 +83,8 @@ public class Simulation {
         }
 
         System.out.println("Cars placed: " + placedCars + " cars removed: " + removedCars );
-        System.out.println("Time: " + time);
-        System.out.println(snapshots.size());
+//        System.out.println("Time: " + time);
+//        System.out.println(snapshots.size());
         OutputGenerator.generateDynamic(snapshots);
         OutputGenerator.generateCarsFiles(carPool.getDeactivatedCars().stream().toList() , carPool.activeCars().stream().toList());
 
