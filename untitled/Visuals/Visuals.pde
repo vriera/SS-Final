@@ -1,4 +1,4 @@
-final String outputFile = "../../outputs/2024-02-15--21-02-02/";
+final String outputFile = "../../outputs/2024-02-15--21-46-46/";
 Integer totalBlocksWidth = 0;
 Integer totalBlocksHeight = 0;
 Integer borders = 20;
@@ -14,7 +14,7 @@ ArrayList<Integer> roadColors;
 
 Float blockGap = 0.05;
 void setup() {
-  size(1200, 1200);
+  size(1000, 1000);
   ellipseMode(CENTER);
   dynamic = loadJSONArray(outputFile + "snapshots.json");
   data = loadJSONObject(outputFile + "static.json");
@@ -84,7 +84,6 @@ void drawRoads() {
       float n2x = map(n2.x, 0, mapWidth, borders, width-borders);
       float n1y = map(n1.y, 0, mapHeight, borders, height-borders);
       float n2y = map(n2.y, 0, mapHeight, borders, height-borders);
-      println("(" + n1x + ", " + n2y + ")");
       line(n1x, n1y, n2x, n2y);
     }
 }
@@ -151,12 +150,15 @@ void draw() {
     Road r = roads.get(roadID);
     drawCar(r, posI, s);
   }
-  if (frameCount > 0 && frameCount % 2 == 0 && snapshotIndex < simSnaps) {
+  if (frameCount > 0 && frameCount % 1 == 0 && snapshotIndex < simSnaps) {
     snapshotIndex += 1;
     println(snapshotIndex);
   } 
   if (snapshotIndex >= simSnaps) {
     snapshotIndex = 0;
   }
+  //if (frameCount < 20 * 60) {
+  //  saveFrame("data/#####.png");
+  //}
   
 }
