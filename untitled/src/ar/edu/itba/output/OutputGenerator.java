@@ -21,6 +21,8 @@ public class OutputGenerator {
     private final static Integer CHUNK_SIZE = 1000;
     private final static String DIRECTORY = "./outputs";
     private static FileWriter SNAPSHOT_WRITER;
+    private static FileWriter CARS_WRITER;
+
 //    private static boolean comma = false;
     //Returns folder
 
@@ -108,8 +110,6 @@ public class OutputGenerator {
             e.printStackTrace();
         }
     }
-
-
     public static void generateDynamic(List<JSONObject> snapshots) {
         if (snapshots == null || snapshots.size() == 0) {
             throw new RuntimeException("No snapshots to write");

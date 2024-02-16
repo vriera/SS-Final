@@ -21,6 +21,7 @@ public class Config {
     public double yellowZoneSpeedMul = 0;
     public double redZoneLength = 0;
 
+    public double turnWeight = 0;
     public long simulationTime = 0;
     public long spawnTime = 0;
     public int cars = 0;
@@ -64,6 +65,7 @@ public class Config {
         yellowZoneSpeedMul = config.getDouble("yellowZoneSpeedMul");
         simulationTime = config.getLong("simulationTime");
         spawnTime = config.getLong("spawnTime");
+        turnWeight = config.getDouble("turnWeight");
     }
 
     @Override

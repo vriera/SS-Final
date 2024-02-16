@@ -22,7 +22,7 @@ public class Simulation {
     private ArrayList<Road> roads = new ArrayList<>();
     private CarPool carPool;
     private ArrayList<Road> borderRoads = new ArrayList<>();
-    private PathFinder pathFinder = new AStar(new EuclidianDistance());
+    private PathFinder pathFinder;
     private double time = 0;
     private final Config config;
     private int placedCars =0;
@@ -35,7 +35,7 @@ public class Simulation {
         for (Road road : roads) {
             System.out.println(road);
         }
-
+        pathFinder = new AStar(new EuclidianDistance() , config.turnWeight);
         this.carPool = new CarPool(config.cars);
     }
 
