@@ -97,7 +97,8 @@ public class Node{
             Car car1 = inboundRoads.get(i).peekHeadCar();
             if (car1 != null) {
                 // If it is inside the ywllow zone
-                if (car1.pos() > car1.road().length() - car1.road().yellowZoneLength()) {
+                double distToEnd = car1.road().length() - car1.pos();
+                if (distToEnd < car1.road().yellowZoneLength()) {
                     inbounds++;
                 }
             }
