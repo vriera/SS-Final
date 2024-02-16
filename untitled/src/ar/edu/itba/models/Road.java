@@ -115,4 +115,8 @@ public class Road {
         }
         return cars.get(index-1);
     }
+
+    public static void resetId(){
+        Road.nextId = 0;
+    }
 }
